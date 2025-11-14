@@ -1,0 +1,29 @@
+{
+  "name": "SilexWEB",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .js,.ts,.vue",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "dependencies": {
+    "vue": "^3.5.21"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/tsconfig": "^0.8.1",
+    "eslint": "^9.36.0",
+    "eslint-plugin-vue": "^10.5.0",
+    "globals": "^16.4.0",
+    "jiti": "^2.6.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.45.0",
+    "vite": "^7.1.7",
+    "vue-tsc": "^3.0.7"
+  }
+}
