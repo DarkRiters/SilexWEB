@@ -4,4 +4,4 @@ services:
     build: .
     container_name: FrontEND
     ports:
-      - "5173:80"
+      - "5137:80"
