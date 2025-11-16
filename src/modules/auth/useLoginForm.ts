@@ -1,5 +1,9 @@
-import {useForm} from "./useForm.ts";
-import {validateEmail, validatePassword, type ValidationErrors} from "./validators.ts";
+import { useForm } from './useForm';
+import {
+    validateEmail,
+    validatePassword,
+    type ValidationErrors,
+} from './validators';
 
 export interface LoginFormValues {
     email: string;
@@ -7,7 +11,7 @@ export interface LoginFormValues {
 }
 
 export function useLoginForm() {
-    const form = useForm<LoginFormValues>({
+    return useForm<LoginFormValues>({
         initialValues: {
             email: '',
             password: '',
@@ -18,10 +22,6 @@ export function useLoginForm() {
                 password: validatePassword(values.password),
             };
         },
-        // submitRequest: async (values) => {
-        //   await authApi.login(values);
-        // },
+        // submitRequest: async (values) => { await authApi.login(values); },
     });
-
-    return form;
 }

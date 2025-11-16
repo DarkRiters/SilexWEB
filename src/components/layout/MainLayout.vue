@@ -1,8 +1,8 @@
 <template>
-  <div class="flex min-h-screen bg-slate-100 dark:bg-slate-900">
+  <div class="ui-main-shell">
     <Sidebar />
 
-    <main class="flex-1 bg-slate-50 dark:bg-slate-900">
+    <main class="ui-main-content">
       <RouterView />
     </main>
   </div>

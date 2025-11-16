@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { useForm } from './useForm';
 import { validateEmail, type ValidationErrors } from './validators';
 
 export interface ForgotPasswordFormValues {
@@ -6,49 +6,15 @@ export interface ForgotPasswordFormValues {
 }
 
 export function useForgotPasswordForm() {
-    const values = ref<ForgotPasswordFormValues>({
-        email: '',
+    return useForm<ForgotPasswordFormValues>({
+        initialValues: {
+            email: '',
+        },
+        validate(values): ValidationErrors {
+            return {
+                email: validateEmail(values.email),
+            };
+        },
+        // submitRequest: async (values) => { await authApi.forgotPassword(values); },
     });
-
-    const errors = ref<ValidationErrors>({});
-    const isSubmitting = ref(false);
-    const isValid = computed(() => !errors.value.email);
-
-    function validate(): boolean {
-        const current = values.value;
-
-        const nextErrors: ValidationErrors = {
-            email: validateEmail(current.email),
-        };
-
-        errors.value = nextErrors;
-        return !nextErrors.email;
-    }
-
-    async function submit(onSuccess?: () => Promise<void> | void) {
-        if (!validate()) return;
-
-        try {
-            isSubmitting.value = true;
-
-            // TODO: tu podepniesz API wysyłki maila resetującego hasło
-            await new Promise((resolve) => setTimeout(resolve, 500));
-
-            if (onSuccess) {
-                await onSuccess();
-            }
-        } finally {
-            isSubmitting.value = false;
-        }
-    }
-
-    return {
-        values,
-        errors,
-        isSubmitting,
-        isValid,
-
-        validate,
-        submit,
-    };
 }

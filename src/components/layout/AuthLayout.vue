@@ -1,15 +1,11 @@
 <template>
-  <div class="min-h-screen flex flex-col bg-slate-100 dark:bg-slate-900">
-    <header
-        class="h-16 flex items-center justify-between px-6
-             border-b border-slate-200 dark:border-slate-700
-             bg-white/80 dark:bg-slate-900/80 backdrop-blur"
-    >
+  <div class="min-h-screen flex flex-col bg-surface-muted dark:bg-surface-dark">
+    <header class="ui-auth-header-bar">
       <RouterLink
           to="/app/dashboard"
           class="text-2xl font-semibold tracking-[0.3em]
-               text-sky-600 hover:text-sky-700
-               dark:text-sky-400 dark:hover:text-sky-300"
+               text-brand-primary hover:text-brand-primaryHover
+               dark:text-brand-primary dark:hover:text-brand-primaryHover"
       >
         SIŁEX
       </RouterLink>

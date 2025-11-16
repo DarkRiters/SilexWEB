@@ -1,8 +1,9 @@
 <template>
   <div>
-    <p class="mb-1 font-semibold text-slate-800 dark:text-slate-100">
+    <p class="ui-section-title">
       {{ t('settings.locale.title') }}
     </p>
+
     <div class="flex gap-2">
       <SettingsToggleButton
           :active="locale === 'pl'"

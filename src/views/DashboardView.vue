@@ -1,11 +1,10 @@
 <template>
-  <div class="h-full flex items-center justify-center text-slate-500">
-    <p class="text-sm">
+  <div class="ui-dashboard-placeholder">
+    <p>
       Dashboard test
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
-
 </script>

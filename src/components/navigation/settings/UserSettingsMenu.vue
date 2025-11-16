@@ -1,7 +1,5 @@
 <template>
-  <div
-      class="w-56 rounded-xl border border-slate-200 bg-white dark:bg-slate-800 dark:border-slate-700 shadow-lg px-3 py-3 text-xs space-y-3"
-  >
+  <div class="ui-card w-56 px-3 py-3 text-xs space-y-3">
     <SettingsThemeSection />
     <SettingsLocaleSection />
     <SettingsProfileSection />

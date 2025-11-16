@@ -1,5 +1,5 @@
-import {computed, ref} from "vue";
-import type {ValidationErrors} from "./validators.ts";
+import { computed, ref } from 'vue';
+import type { ValidationErrors } from './validators';
 
 interface UseFormOptions<TValues> {
     initialValues: TValues;
@@ -12,10 +12,9 @@ export function useForm<TValues>(options: UseFormOptions<TValues>) {
     const errors = ref<ValidationErrors>({});
     const isSubmitting = ref(false);
 
-    const isValid = computed(() => {
-        const currentErrors = errors.value;
-        return Object.values(currentErrors).every((err) => !err);
-    });
+    const isValid = computed(() =>
+        Object.values(errors.value).every((err) => !err),
+    );
 
     function validate(): boolean {
         const nextErrors = options.validate(values.value);
@@ -48,7 +47,6 @@ export function useForm<TValues>(options: UseFormOptions<TValues>) {
         errors,
         isSubmitting,
         isValid,
-
         validate,
         submit,
     };

@@ -1,5 +1,10 @@
-import {useForm} from "./useForm.ts";
-import {validateEmail, validatePassword, validatePasswordConfirm, type ValidationErrors} from "./validators.ts";
+import { useForm } from './useForm';
+import {
+    validateEmail,
+    validatePassword,
+    validatePasswordConfirm,
+    type ValidationErrors,
+} from './validators';
 
 export interface RegisterFormValues {
     email: string;
@@ -8,7 +13,7 @@ export interface RegisterFormValues {
 }
 
 export function useRegisterForm() {
-    const form = useForm<RegisterFormValues>({
+    return useForm<RegisterFormValues>({
         initialValues: {
             email: '',
             password: '',
@@ -24,10 +29,6 @@ export function useRegisterForm() {
                 ),
             };
         },
-        // submitRequest: async (values) => {
-        //   await authApi.register(values);
-        // },
+        // submitRequest: async (values) => { await authApi.register(values); },
     });
-
-    return form;
 }

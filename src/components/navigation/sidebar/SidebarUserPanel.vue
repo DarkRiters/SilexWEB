@@ -2,36 +2,29 @@
   <div class="relative">
     <div
         v-if="!collapsed"
-        class="rounded-2xl border border-slate-200 dark:border-slate-700
-             bg-white dark:bg-slate-900
-             px-4 py-3 shadow-sm flex flex-col gap-3"
+        class="ui-sidebar-user-card flex flex-col gap-3"
     >
       <div class="flex items-center justify-between gap-3">
         <div class="flex items-center gap-3">
-          <div
-              class="w-9 h-9 rounded-full
-                   bg-slate-200 text-slate-500
-                   dark:bg-slate-700 dark:text-slate-300
-                   flex items-center justify-center text-xs"
-          >
+          <div class="w-9 h-9 ui-avatar-circle text-xs">
             :)
           </div>
 
-          <p class="text-sm font-semibold text-slate-900 dark:text-slate-50">
+          <p class="text-sm font-semibold text-text-main-light dark:text-text-main-dark">
             {{ greeting }}
           </p>
         </div>
 
-        <div class="flex items-center gap-3 text-xl text-slate-700 dark:text-slate-100">
+        <div class="flex items-center gap-3 text-xl text-text-main-light dark:text-text-main-dark">
           <button
               type="button"
-              class="hover:text-sky-600 dark:hover:text-sky-400 transition"
+              class="hover:text-brand-primary dark:hover:text-brand-primaryHover transition"
           >
             🔔
           </button>
           <button
               type="button"
-              class="hover:text-sky-600 dark:hover:text-sky-400 transition"
+              class="hover:text-brand-primary dark:hover:text-brand-primaryHover transition"
               @click="toggleSettings"
           >
             ⚙️
@@ -43,7 +36,7 @@
         <RouterLink
             v-if="!auth.isLoggedIn"
             to="/auth/login"
-            class="text-sky-600 hover:text-sky-500 dark:text-sky-400 dark:hover:text-sky-300"
+            class="ui-btn-link"
         >
           {{ t('userPanel.login') }}
         </RouterLink>
@@ -51,7 +44,7 @@
         <button
             v-else
             type="button"
-            class="text-slate-500 hover:text-red-500 dark:text-slate-400 dark:hover:text-red-400 transition"
+            class="text-xs text-text-muted-light dark:text-text-muted-dark hover:text-red-500 dark:hover:text-red-400 transition"
             @click="handleLogout"
         >
           {{ t('userPanel.logout') }}
@@ -61,30 +54,22 @@
 
     <div
         v-else
-        class="h-24 w-10 rounded-full border border-slate-200 dark:border-slate-700
-             bg-white dark:bg-slate-900
-             flex flex-col items-center justify-center gap-2
-             text-slate-700 dark:text-slate-100 text-xs"
+        class="ui-sidebar-user-compact text-text-main-light dark:text-text-main-dark"
     >
-      <div
-          class="w-6 h-6 rounded-full
-               bg-slate-200 text-slate-500
-               dark:bg-slate-700 dark:text-slate-300
-               flex items-center justify-center text-[10px]"
-      >
+      <div class="w-6 h-6 ui-avatar-circle text-[10px]">
         :)
       </div>
 
       <button
           type="button"
-          class="hover:text-sky-600 dark:hover:text-sky-400 transition"
+          class="hover:text-brand-primary dark:hover:text-brand-primaryHover transition"
       >
         🔔
       </button>
 
       <button
           type="button"
-          class="hover:text-sky-600 dark:hover:text-sky-400 transition"
+          class="hover:text-brand-primary dark:hover:text-brand-primaryHover transition"
           @click="toggleSettings"
       >
         ⚙️

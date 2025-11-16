@@ -3,7 +3,7 @@
     <label
         v-if="label"
         :for="id"
-        class="block text-xs font-medium text-slate-700 dark:text-slate-200"
+        class="ui-label"
     >
       {{ label }}
     </label>
@@ -14,11 +14,7 @@
           :type="isVisible ? 'text' : 'password'"
           :name="name"
           :autocomplete="autocomplete"
-          class="w-full rounded-lg border px-3 py-2 pr-9 text-sm
-               border-slate-300 bg-white text-slate-900
-               dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100
-               focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500
-               placeholder:text-slate-400 dark:placeholder:text-slate-500"
+          class="ui-input-password"
           :placeholder="placeholder"
           :value="modelValue"
           @input="onInput"
@@ -26,25 +22,26 @@
 
       <button
           type="button"
-          class="absolute inset-y-0 right-0 px-2 text-xs text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
+          class="absolute inset-y-0 right-0 px-2 text-xs text-text-muted-light
+                 dark:text-text-muted-dark hover:text-text-main-light
+                 dark:hover:text-text-main-dark transition"
           @click="toggle"
       >
         {{ isVisible ? t('auth.fields.hidePassword') : t('auth.fields.showPassword') }}
       </button>
     </div>
 
-    <p
-        v-if="error"
-        class="text-xs text-red-500"
-    >
-      {{ error }}
+    <p v-if="error" class="ui-error-text">
+      {{ t(error) }}
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import {useI18n} from "../../composables/useI18n.ts";
+import type { MessageKey } from '../../i18n/messages';
+import { useI18n } from '../../composables/useI18n';
+
 const { t } = useI18n();
 
 defineProps<{
@@ -54,7 +51,7 @@ defineProps<{
   placeholder?: string;
   autocomplete?: string;
   modelValue: string;
-  error?: string;
+  error?: MessageKey;
 }>();
 
 const emit = defineEmits<{
