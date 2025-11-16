@@ -1,0 +1,66 @@
+.
+├── Dockerfile
+├── Makefile
+├── README.md
+├── docker-compose.yml
+├── eslint.config.ts
+├── index.html
+├── package-lock.json
+├── package.json
+├── postcss.config.cjs
+├── src
+│   ├── App.vue
+│   ├── components
+│   │   ├── auth
+│   │   │   ├── AuthCard.vue
+│   │   │   ├── AuthField.vue
+│   │   │   └── AuthPasswordField.vue
+│   │   ├── layout
+│   │   │   ├── AuthLayout.vue
+│   │   │   └── MainLayout.vue
+│   │   └── navigation
+│   │       ├── settings
+│   │       │   ├── SettingsLocaleSection.vue
+│   │       │   ├── SettingsProfileSection.vue
+│   │       │   ├── SettingsThemeSection.vue
+│   │       │   ├── SettingsToggleButton.vue
+│   │       │   └── UserSettingsMenu.vue
+│   │       └── sidebar
+│   │           ├── Sidebar.vue
+│   │           └── SidebarUserPanel.vue
+│   ├── composables
+│   │   ├── useI18n.ts
+│   │   ├── useLocale.ts
+│   │   └── useTheme.ts
+│   ├── i18n
+│   │   └── messages.ts
+│   ├── main.ts
+│   ├── modules
+│   │   └── auth
+│   │       ├── useForgotPasswordForm.ts
+│   │       ├── useForm.ts
+│   │       ├── useLoginForm.ts
+│   │       ├── useRegisterForm.ts
+│   │       └── validators.ts
+│   ├── router
+│   │   └── index.ts
+│   ├── stores
+│   │   ├── authStore.ts
+│   │   └── uiStore.ts
+│   ├── styles
+│   │   └── main.css
+│   ├── utils
+│   └── views
+│       ├── DashboardView.vue
+│       └── auth
+│           ├── ForgotPasswordView.vue
+│           ├── LoginView.vue
+│           └── RegisterView.vue
+├── struktura.txt
+├── tailwind.config.cjs
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
+
+18 directories, 46 files

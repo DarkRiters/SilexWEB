@@ -6,3 +6,15 @@
 ### Vite 
 ### Tailwind 
 ### Docker
+### Pinia
+### Vue Router
+### I18n
+### Makefile
+
+## Wzorce projektowe:
+### DRY
+### Store (Pinia)
+### Composables
+### Modules (useCase)
+### Views  
+### Layouts
