@@ -1,84 +1,49 @@
 <template>
   <AuthForm
-      :title="t('auth.login.title')"
-      :subtitle="t('auth.login.subtitle')"
-      :submitLabel="t('auth.login.submit')"
-      :loadingLabel="t('auth.common.loading')"
-      :fields="fields"
-      :values="values"
-      :errors="errors"
-      :isSubmitting="isSubmitting"
-      :onSubmit="onSubmit"
-  >
-    <template #footer>
-      <div class="flex flex-col gap-2 ui-settings-footer-text">
-        <RouterLink
-            to="/auth/forgot-password"
-            class="ui-btn-link"
-        >
-          {{ t('auth.login.forgotPassword') }}
-        </RouterLink>
+      title="Widok Logowania"
+      :onSubmit="onSubmit">
+        <BaseInput
+            id="email"
+            label="E-mail"
+            type="email"
+            placeholder="Wpisz e-mail"
+            v-model="email"
+        />
 
-        <p>
-          {{ t('auth.login.noAccount') }}
-          <RouterLink
-              to="/auth/register"
-              class="ui-btn-link"
-          >
-            {{ t('auth.login.goToRegister') }}
-          </RouterLink>
-        </p>
-      </div>
+        <BaseInput
+            id="password"
+            label="Hasło"
+            type="password"
+            placeholder="Wpisz hasło"
+            v-model="password"
+        />
+    <template #actions>
+      <BaseButton type="submit" class="bg-green-600 hover:bg-green-500"> Zaloguj</BaseButton>
     </template>
   </AuthForm>
 </template>
-
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useRouter, RouterLink } from 'vue-router';
+import {ref} from "vue";
+import {useAuthStore} from "../../stores/authStore.ts";
+import BaseButton from "../../components/ui/BaseButton.vue";
+import BaseInput from "../../components/ui/BaseInput.vue";
+import AuthForm from "../../components/ui/AuthForm.vue";
 
-import AuthForm from '../../components/auth/AuthForm.vue';
-import AuthField from '../../components/auth/AuthField.vue';
-import AuthPasswordField from '../../components/auth/AuthPasswordField.vue';
+const auth = useAuthStore();
+const email = ref('');
+const password = ref('');
 
-import { useLoginForm } from '../../modules/auth/useLoginForm';
-import { useI18n } from '../../composables/useI18n';
-
-const router = useRouter();
-const { t } = useI18n();
-const { values, errors, isSubmitting, submit } = useLoginForm();
-
-const fields = computed(() => [
-  {
-    id: 'email',
-    component: AuthField,
-    model: 'email',
-    props: {
-      id: 'email',
-      name: 'email',
-      type: 'email',
-      autocomplete: 'email',
-      label: t('auth.fields.email'),
-      placeholder: t('auth.placeholders.email'),
-    },
-  },
-  {
-    id: 'password',
-    component: AuthPasswordField,
-    model: 'password',
-    props: {
-      id: 'password',
-      name: 'password',
-      autocomplete: 'current-password',
-      label: t('auth.fields.password'),
-      placeholder: t('auth.placeholders.password'),
-    },
-  },
-]);
-
-async function onSubmit() {
-  await submit(async () => {
-    await router.push('/app/dashboard');
-  });
+function onSubmit() {
+  console.log('Email:', email.value);
+  console.log('Password:', password.value);
+  const dto = {
+    id: 1,
+    name: "user",
+    email: "user@gmail.com",
+    role: "admin",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  };
+  auth.loginFromDTO(dto);
 }
 </script>

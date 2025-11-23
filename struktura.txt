@@ -11,36 +11,27 @@
 ├── src
 │   ├── App.vue
 │   ├── components
-│   │   ├── auth
-│   │   │   ├── AuthCard.vue
-│   │   │   ├── AuthField.vue
-│   │   │   └── AuthPasswordField.vue
 │   │   ├── layout
-│   │   │   ├── AuthLayout.vue
-│   │   │   └── MainLayout.vue
-│   │   └── navigation
-│   │       ├── settings
-│   │       │   ├── SettingsLocaleSection.vue
-│   │       │   ├── SettingsProfileSection.vue
-│   │       │   ├── SettingsThemeSection.vue
-│   │       │   ├── SettingsToggleButton.vue
-│   │       │   └── UserSettingsMenu.vue
-│   │       └── sidebar
-│   │           ├── Sidebar.vue
-│   │           └── SidebarUserPanel.vue
+│   │   │   └── AuthNavbar.vue
+│   │   └── ui
+│   │       ├── AuthForm.vue
+│   │       ├── BaseButton.vue
+│   │       └── BaseInput.vue
 │   ├── composables
 │   │   ├── useI18n.ts
 │   │   ├── useLocale.ts
 │   │   └── useTheme.ts
+│   ├── domain
+│   │   └── user
+│   │       ├── User.ts
+│   │       ├── UserDTO.ts
+│   │       ├── UserFactory.ts
+│   │       └── UserRole.ts
 │   ├── i18n
 │   │   └── messages.ts
 │   ├── main.ts
 │   ├── modules
 │   │   └── auth
-│   │       ├── useForgotPasswordForm.ts
-│   │       ├── useForm.ts
-│   │       ├── useLoginForm.ts
-│   │       ├── useRegisterForm.ts
 │   │       └── validators.ts
 │   ├── router
 │   │   └── index.ts
@@ -49,7 +40,6 @@
 │   │   └── uiStore.ts
 │   ├── styles
 │   │   └── main.css
-│   ├── utils
 │   └── views
 │       ├── DashboardView.vue
 │       └── auth
@@ -63,4 +53,4 @@
 ├── tsconfig.node.json
 └── vite.config.ts
 
-18 directories, 46 files
+16 directories, 38 files

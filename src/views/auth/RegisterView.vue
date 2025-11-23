@@ -1,87 +1,57 @@
 <template>
   <AuthForm
-      :title="t('auth.register.title')"
-      :subtitle="t('auth.register.subtitle')"
-      :submitLabel="t('auth.register.submit')"
-      :loadingLabel="t('auth.common.loading')"
-      :fields="fields"
-      :values="values"
-      :errors="errors"
-      :isSubmitting="isSubmitting"
-      :onSubmit="onSubmit"
-  >
-    <template #footer>
-      <p class="ui-settings-footer-text">
-        {{ t('auth.register.haveAccount') }}
-        <RouterLink
-            to="/auth/login"
-            class="ui-btn-link"
-        >
-          {{ t('auth.register.goToLogin') }}
-        </RouterLink>
-      </p>
+      title="Rejestracja"
+      :onSubmit="onSubmit">
+    <BaseInput
+        id="email"
+        label="E-mail"
+        type="email"
+        placeholder="Wpisz e-mail"
+        v-model="email"
+    />
+    <BaseInput
+        id="password"
+        label="Hasło"
+        type="password"
+        placeholder="Wpisz hasło"
+        v-model="password"
+    />
+    <BaseInput
+        id="confirmpassword"
+        label="Potwierdź hasło"
+        type="password"
+        placeholder="Wpisz hasło"
+        v-model="confirmPassword"
+    />
+    <template #actions>
+      <BaseButton type="submit" class="bg-green-600 hover:bg-green-500">Zarejestruj</BaseButton>
     </template>
   </AuthForm>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useRouter, RouterLink } from 'vue-router';
+import AuthForm from "../../components/ui/AuthForm.vue";
+import {useAuthStore} from "../../stores/authStore.ts";
+import {ref} from "vue";
+import BaseInput from "../../components/ui/BaseInput.vue";
+import BaseButton from "../../components/ui/BaseButton.vue";
 
-import AuthForm from '../../components/auth/AuthForm.vue';
-import AuthField from '../../components/auth/AuthField.vue';
-import AuthPasswordField from '../../components/auth/AuthPasswordField.vue';
-
-import { useRegisterForm } from '../../modules/auth/useRegisterForm';
-import { useI18n } from '../../composables/useI18n';
-
-const router = useRouter();
-const { t } = useI18n();
-const { values, errors, isSubmitting, submit } = useRegisterForm();
-
-const fields = computed(() => [
-  {
-    id: 'email',
-    component: AuthField,
-    model: 'email',
-    props: {
-      id: 'email',
-      name: 'email',
-      type: 'email',
-      autocomplete: 'email',
-      label: t('auth.fields.email'),
-      placeholder: t('auth.placeholders.email'),
-    },
-  },
-  {
-    id: 'password',
-    component: AuthPasswordField,
-    model: 'password',
-    props: {
-      id: 'password',
-      name: 'password',
-      autocomplete: 'new-password',
-      label: t('auth.fields.password'),
-      placeholder: t('auth.placeholders.password'),
-    },
-  },
-  {
-    id: 'confirmPassword',
-    component: AuthPasswordField,
-    model: 'confirmPassword',
-    props: {
-      id: 'confirmPassword',
-      name: 'confirmPassword',
-      autocomplete: 'new-password',
-      label: t('auth.fields.confirmPassword'),
-      placeholder: t('auth.placeholders.password'),
-    },
-  },
-]);
-
-async function onSubmit() {
-  await submit(async () => {
-    await router.push('/app/dashboard');
-  });
+const auth = useAuthStore();
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+function onSubmit() {
+  console.log('Email:', email.value);
+  console.log('Password:', password.value);
+  const dto = {
+    id: 1,
+    name: "user",
+    email: "user@gmail.com",
+    role: "admin",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  };
+  auth.loginFromDTO(dto);
 }
 </script>
+

@@ -1,56 +1,33 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
+import DashboardView from '../views/DashboardView.vue';
 import LoginView from "../views/auth/LoginView.vue";
 import RegisterView from "../views/auth/RegisterView.vue";
 import ForgotPasswordView from "../views/auth/ForgotPasswordView.vue";
-import MainLayout from "../components/layout/MainLayout.vue";
-import DashboardView from "../views/DashboardView.vue";
-import AuthLayout from "../components/layout/AuthLayout.vue";
-
 
 const routes: RouteRecordRaw[] = [
     {
         path: '/',
-        redirect: '/auth/login',
+        name: 'dashboard',
+        component: DashboardView,
     },
-
     {
-        path: '/auth',
-        component: AuthLayout,
-        children: [
-            {
-                path: 'login',
-                name: 'login',
-                component: LoginView,
-            },
-            {
-                path: 'register',
-                name: 'register',
-                component: RegisterView,
-            },
-            {
-                path: 'forgot-password',
-                name: 'forgot-password',
-                component: ForgotPasswordView,
-            },
-        ],
+        path: '/login',
+        name: 'login',
+        component: LoginView,
     },
-
-    // APP LAYOUT
     {
-        path: '/app',
-        component: MainLayout,
-        children: [
-            {
-                path: 'dashboard',
-                name: 'dashboard',
-                component: DashboardView,
-            },
-        ],
+        path: '/register',
+        name: 'register',
+        component: RegisterView,
     },
-
+    {
+        path: '/forgot-password',
+        name: 'forgot-password',
+        component: ForgotPasswordView,
+    },
     {
         path: '/:pathMatch(.*)*',
-        redirect: '/auth/login',
+        redirect: '/',
     },
 ];
 

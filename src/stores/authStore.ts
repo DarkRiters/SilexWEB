@@ -1,20 +1,27 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
+import type {User} from "../domain/user/User.ts";
+import type {UserDTO} from "../domain/user/UserDTO.ts";
+import {UserFactory} from "../domain/user/UserFactory.ts";
 
 export const useAuthStore = defineStore('auth', () => {
-    const isLoggedIn = ref(false);
+    const currentUser = ref<User | null>(null);
+    const isLoggedIn = computed(() => currentUser.value !== null);
 
-    function login() {
-        isLoggedIn.value = true;
+
+    function loginFromDTO(dto: UserDTO) {
+        const user = UserFactory.fromApi(dto);
+        currentUser.value = user;
     }
 
     function logout() {
-        isLoggedIn.value = false;
+        currentUser.value = null;
     }
 
     return {
+        currentUser,
         isLoggedIn,
-        login,
+        loginFromDTO,
         logout,
     };
 });
