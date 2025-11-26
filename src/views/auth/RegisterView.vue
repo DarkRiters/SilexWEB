@@ -1,57 +1,77 @@
 <template>
   <AuthForm
-      title="Rejestracja"
+      :title="t('auth.register.title')"
       :onSubmit="onSubmit">
     <BaseInput
         id="email"
-        label="E-mail"
+        :label="t('auth.fields.email')"
         type="email"
-        placeholder="Wpisz e-mail"
+        :placeholder="t('auth.placeholders.email')"
         v-model="email"
+        :error="emailError ? t(emailError): ''"
     />
     <BaseInput
         id="password"
-        label="Hasło"
+        :label="t('auth.fields.password')"
         type="password"
-        placeholder="Wpisz hasło"
+        :placeholder="t('auth.placeholders.password')"
         v-model="password"
+        :error="passwordError ? t(passwordError) : confirmPasswordError ? t(confirmPasswordError)  : ''"
     />
     <BaseInput
         id="confirmpassword"
-        label="Potwierdź hasło"
+        :label="t('auth.fields.confirmPassword')"
         type="password"
-        placeholder="Wpisz hasło"
+        :placeholder="t('auth.placeholders.password')"
         v-model="confirmPassword"
+        :error="passwordError ? t(passwordError) : confirmPasswordError ? t(confirmPasswordError)  : ''"
     />
     <template #actions>
-      <BaseButton type="submit" class="bg-green-600 hover:bg-green-500">Zarejestruj</BaseButton>
+      <BaseButton type="submit" class="bg-green-600 hover:bg-green-500">{{ t('auth.register.submit') }}</BaseButton>
+    </template>
+    <template #footer>
+      <nav class="flex gap-4 justify-center">
+        <RouterLink
+            to="/login"
+        >
+          {{ t('auth.register.haveAccount') }}
+        </RouterLink>
+      </nav>
     </template>
   </AuthForm>
 </template>
 
 <script setup lang="ts">
 import AuthForm from "../../components/ui/AuthForm.vue";
-import {useAuthStore} from "../../stores/authStore.ts";
+import {authStore} from "../../stores/AuthStore.ts";
 import {ref} from "vue";
 import BaseInput from "../../components/ui/BaseInput.vue";
 import BaseButton from "../../components/ui/BaseButton.vue";
+import {useI18n} from "../../composables/useI18n.ts";
+import {validateEmail, validatePassword, validatePasswordConfirm} from "../../modules/auth/validators.ts";
+import type {MessageKey} from "../../i18n/messages.ts";
+import {router} from "../../router";
 
-const auth = useAuthStore();
+const auth = authStore();
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
-function onSubmit() {
-  console.log('Email:', email.value);
-  console.log('Password:', password.value);
-  const dto = {
-    id: 1,
-    name: "user",
-    email: "user@gmail.com",
-    role: "admin",
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  };
-  auth.loginFromDTO(dto);
+const {t} = useI18n();
+const emailError = ref<MessageKey | null>(null);
+const passwordError = ref<MessageKey | null>(null);
+const confirmPasswordError = ref<MessageKey | null>(null);
+async function onSubmit() {
+  emailError.value = validateEmail(email.value) ?? null;
+  passwordError.value = validatePassword(password.value) ?? null;
+  confirmPasswordError.value = validatePasswordConfirm(password.value, confirmPassword.value) ?? null;
+
+  if (emailError.value || passwordError.value || confirmPasswordError.value) {
+    return;
+  }
+
+    await auth.register(email.value, password.value);
+    await router.push('/dashboard');
+    console.log('Zarejestrowano:', auth.currentUser);
 }
 </script>
 

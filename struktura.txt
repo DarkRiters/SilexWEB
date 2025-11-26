@@ -35,8 +35,13 @@
 │   │       └── validators.ts
 │   ├── router
 │   │   └── index.ts
+│   ├── services
+│   │   ├── auth
+│   │   │   └── AuthService.ts
+│   │   └── http
+│   │       └── api.ts
 │   ├── stores
-│   │   ├── authStore.ts
+│   │   ├── AuthStore.ts
 │   │   └── uiStore.ts
 │   ├── styles
 │   │   └── main.css
@@ -53,4 +58,4 @@
 ├── tsconfig.node.json
 └── vite.config.ts
 
-16 directories, 38 files
+19 directories, 40 files

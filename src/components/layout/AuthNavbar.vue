@@ -1,11 +1,11 @@
 <template>
   <header class="w-full flex items-center justify-between px-6 py-3  app-nav">
-    <div class="font-semibold tracking-wide text-blue-500 hover:text-blue-400">
+    <div class="app-logo font-semibold tracking-wide">
       <nav class="flex gap-4">
         <RouterLink
             to="/dashboard"
         >
-          SilexWEB
+          SILEX
         </RouterLink>
       </nav>
     </div>
@@ -13,31 +13,31 @@
       <RouterLink
           to="/login"
       >
-        Logowanie
+        {{ t('auth.login.title') }}
       </RouterLink>
       <RouterLink
           to="/register"
       >
-        Rejestracja
+        {{ t('auth.register.title') }}
       </RouterLink>
       <RouterLink
           to="/forgot-password"
       >
-        Odzyskaj konto
+        {{ t('auth.forgot.title') }}
       </RouterLink>
     </nav>
     <div class="flex gap-4">
       <button
           @click="toggleTheme"
-          class="px-2 py-1 app-surface"
+          class="px-2 py-1 rounded-xl app-surface"
       >
         {{ theme === 'dark' ? '🌙' : '☀️' }}
       </button>
       <button
           @click="setLocale(locale === 'pl' ? 'en' : 'pl')"
-          class="px-2 py-1 app-surface"
+          class="px-2 py-1 rounded-xl app-surface"
       >
-        {{ locale === 'pl' ? 'en' : 'pl' }}
+        {{ locale === 'pl' ? 'PL' : 'EN' }}
       </button>
     </div>
   </header>
@@ -47,6 +47,9 @@
 
 import {useTheme} from "../../composables/useTheme.ts";
 import {useLocale} from "../../composables/useLocale.ts";
+import {useI18n} from "../../composables/useI18n.ts";
+
 const {theme, toggleTheme} = useTheme();
 const {locale, setLocale} = useLocale();
+const {t} = useI18n();
 </script>

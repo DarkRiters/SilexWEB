@@ -1,13 +1,16 @@
 <template>
   <AuthNavbar/>
   <div class="min-h-screen flex items-center justify-center">
-    <div class="px-6 py-6 app-surface space-y-4">
+    <div class="app-surface px-6 py-6 space-y-4 rounded-xl">
       <h1 class="text-center"> {{title}}</h1>
       <form
           class="space-y-4" @submit.prevent="onSubmit">
         <slot/>
         <div>
           <slot name="actions"/>
+        </div>
+        <div class="text-center app-footer">
+          <slot name="footer" />
         </div>
       </form>
     </div>
@@ -19,6 +22,6 @@ import AuthNavbar from "../layout/AuthNavbar.vue";
 
 defineProps<{
   title: string;
-  onSubmit: () => void;
+  onSubmit: () => void | Promise<void>;
 }>()
 </script>

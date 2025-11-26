@@ -12,6 +12,9 @@
         :value="modelValue"
         @input="onInput"
     />
+    <p v-if="error" class="text-red-600">
+      {{error}}
+    </p>
   </div>
 </template>
 
@@ -22,6 +25,7 @@ defineProps<{
   type: string;
   placeholder: string;
   modelValue: string;
+  error?: string;
 }>();
 
 const emit = defineEmits<{
