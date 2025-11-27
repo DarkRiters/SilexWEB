@@ -1,14 +1,6 @@
 <template>
   <header class="w-full flex items-center justify-between px-6 py-3  app-nav">
-    <div class="app-logo font-semibold tracking-wide">
-      <nav class="flex gap-4">
-        <RouterLink
-            to="/dashboard"
-        >
-          SILEX
-        </RouterLink>
-      </nav>
-    </div>
+    <BaseLogo/>
     <nav class="flex gap-4">
       <RouterLink
           to="/login"
@@ -48,6 +40,7 @@
 import {useTheme} from "../../composables/useTheme.ts";
 import {useLocale} from "../../composables/useLocale.ts";
 import {useI18n} from "../../composables/useI18n.ts";
+import BaseLogo from "../ui/BaseLogo.vue";
 
 const {theme, toggleTheme} = useTheme();
 const {locale, setLocale} = useLocale();

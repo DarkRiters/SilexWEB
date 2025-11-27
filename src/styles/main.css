@@ -20,11 +20,11 @@
 }
 /*navbar*/
 .app-nav {
-    @apply bg-gray-100 dark:bg-gray-900/80 border-b border-gray-300 dark:border-gray-700;
+    @apply bg-gray-100 dark:bg-gray-900/80 border border-gray-300 dark:border-gray-700;
 }
 /*footer*/
 .app-footer {
-    @apply dark:text-blue-500 text-blue-700;
+    @apply dark:text-blue-500 text-blue-700 hover:text-blue-600 hover:dark:text-blue-400;
 }
 /*logo*/
 .app-logo {
