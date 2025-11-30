@@ -61,4 +61,19 @@ export class AuthService {
 
         await api.post('/forgot-password', {email});
     }
+    static async updateProfile(payload: { name: string; email: string }): Promise<UserDTO> {
+        if (USE_FAKE_API) {
+            await new Promise(r => setTimeout(r, 300));
+
+            return {
+                ...fakeUser,
+                name: payload.name,
+                email: payload.email,
+                updated_at: new Date().toISOString(),
+            };
+        }
+
+        const res = await api.put('/me', payload);
+        return res.data.user as UserDTO;
+    }
 }

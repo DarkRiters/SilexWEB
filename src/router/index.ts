@@ -3,6 +3,7 @@ import DashboardView from '../views/DashboardView.vue';
 import LoginView from "../views/auth/LoginView.vue";
 import RegisterView from "../views/auth/RegisterView.vue";
 import ForgotPasswordView from "../views/auth/ForgotPasswordView.vue";
+import ProfileView from "../views/ProfileView.vue";
 
 const routes: RouteRecordRaw[] = [
     {
@@ -24,6 +25,11 @@ const routes: RouteRecordRaw[] = [
         path: '/forgot-password',
         name: 'forgot-password',
         component: ForgotPasswordView,
+    },
+    {
+        path: '/profile',
+        name: 'profile',
+        component: ProfileView,
     },
     {
         path: '/:pathMatch(.*)*',

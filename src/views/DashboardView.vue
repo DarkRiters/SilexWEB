@@ -1,7 +1,9 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center">
-    <SideNavbar/>
-    <span>Widok</span>
+  <div class="min-h-screen flex app-nav">
+    <SideNavbar />
+    <div class="min-h-screen flex items-center justify-center">
+      <span>Widok</span>
+    </div>
   </div>
 </template>
 

@@ -13,6 +13,7 @@ const messages = {
         // SETTINGS - PROFILE
         'settings.profile.title': 'Profil',
         'settings.profile.open': 'Otwórz profil',
+        'settings.profile.save': 'Zapisz profil',
 
         // USER PANEL
         'userPanel.greeting.noName': 'Witaj!',
@@ -44,6 +45,7 @@ const messages = {
         'auth.forgot.goToLogin': 'Wróć do logowania',
 
         // AUTH - FIELDS
+        'auth.fields.name': 'Nazwa',
         'auth.fields.email': 'Email',
         'auth.fields.password': 'Hasło',
         'auth.fields.confirmPassword': 'Powtórz hasło',
@@ -82,6 +84,7 @@ const messages = {
         // SETTINGS - PROFILE
         'settings.profile.title': 'Profile',
         'settings.profile.open': 'Open profile',
+        'settings.profile.save': 'Save profile',
 
         // USER PANEL
         'userPanel.greeting.noName': 'Welcome!',
@@ -113,6 +116,7 @@ const messages = {
         'auth.forgot.goToLogin': 'Back to login',
 
         // AUTH - FIELDS
+        'auth.fields.name': 'Name',
         'auth.fields.email': 'Email',
         'auth.fields.password': 'Password',
         'auth.fields.confirmPassword': 'Confirm password',
