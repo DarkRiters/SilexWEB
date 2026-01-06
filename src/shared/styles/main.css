@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========== APP SHELL ========== */
+.app-shell {
+    @apply min-h-screen font-sans
+    bg-slate-50 text-slate-900
+    dark:bg-[#0b1220] dark:text-slate-100;
+}
+
+/* ========== SURFACES / PANELS ========== */
+.app-surface {
+    @apply rounded-2xl
+    bg-white dark:bg-slate-900
+    border border-slate-200 dark:border-slate-700
+    shadow-sm;
+}
+
+/* ========== INPUTS ========== */
+.app-input {
+    @apply w-full rounded-xl px-3 py-2
+    bg-slate-100 text-slate-900
+    placeholder-slate-500
+    border border-slate-300
+    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+    dark:bg-slate-800 dark:text-slate-100
+    dark:placeholder-slate-400
+    dark:border-slate-600;
+}
+
+/* ========== BUTTONS ========== */
+.app-button {
+    @apply inline-flex items-center justify-center gap-2
+    rounded-xl px-4 py-2 font-medium
+    bg-blue-600 text-white
+    hover:bg-blue-500
+    focus:outline-none focus:ring-2 focus:ring-blue-400
+    disabled:opacity-50 disabled:pointer-events-none;
+}
+
+.app-button-secondary {
+    @apply bg-transparent
+    text-slate-700 dark:text-slate-200
+    border border-slate-300 dark:border-slate-600
+    hover:bg-slate-100 dark:hover:bg-slate-800;
+}
+
+.app-button-danger {
+    @apply bg-transparent
+    text-red-500
+    border border-red-500/40
+    hover:bg-red-500/10;
+}
+
+/* ========== NAVBAR / SIDEBAR ========== */
+.app-nav {
+    @apply bg-white/80 dark:bg-slate-900/80
+    backdrop-blur
+    border-r border-slate-200 dark:border-slate-700;
+}
+
+/* ========== TEXT / LINKS ========== */
+.app-link {
+    @apply text-blue-600 dark:text-blue-400
+    hover:underline;
+}
+
+/* ========== BADGES / TAGS ========== */
+.app-badge {
+    @apply inline-flex items-center gap-1
+    rounded-full px-2 py-1 text-xs
+    bg-slate-200 text-slate-700
+    dark:bg-slate-700 dark:text-slate-200;
+}
+
+/* ========== LOGO ========== */
+.app-logo {
+    @apply text-blue-600 dark:text-blue-400
+    font-semibold tracking-wide;
+}

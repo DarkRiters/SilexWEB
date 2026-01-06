@@ -12,7 +12,6 @@
 ### Makefile
 
 ## Wzorce projektowe:
-### DRY
 ### Store (Pinia)
 ### Composables
 ### Modules (useCase)
