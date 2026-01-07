@@ -24,7 +24,7 @@
       </div>
 
       <!-- KPIs (GLOBAL) -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="app-surface p-5">
           <div class="text-xs opacity-70">{{ t("training.stats.totalTrainings") }}</div>
           <div class="mt-1 text-2xl font-semibold">{{ totalTrainings }}</div>
@@ -38,15 +38,7 @@
           <div class="text-xs opacity-70">{{ t("training.stats.totalDuration") }}</div>
           <div class="mt-1 text-2xl font-semibold">{{ totalDuration }}</div>
           <div class="mt-3 text-xs opacity-70">
-            {{ t("dashboard.kpi.durationHint") }}
-          </div>
-        </div>
-
-        <div class="app-surface p-5">
-          <div class="text-xs opacity-70">{{ t("training.stats.totalCalories") }}</div>
-          <div class="mt-1 text-2xl font-semibold">{{ totalCalories }}</div>
-          <div class="mt-3 text-xs opacity-70">
-            {{ t("dashboard.kpi.caloriesHint") }}
+            {{ t("dashboard.subtitle.loggedIn") }}
           </div>
         </div>
 
@@ -54,7 +46,7 @@
           <div class="text-xs opacity-70">{{ t("training.details.summary.totalDistance") }}</div>
           <div class="mt-1 text-2xl font-semibold">{{ totalDistance }}</div>
           <div class="mt-3 text-xs opacity-70">
-            {{ t("dashboard.kpi.distanceHint") }}
+            {{ t("dashboard.subtitle.loggedIn") }}
           </div>
         </div>
       </div>
@@ -65,7 +57,9 @@
         <div class="lg:col-span-2 app-surface p-6">
           <div class="flex items-center justify-between">
             <h2 class="text-base font-semibold">{{ t("dashboard.section.recent") }}</h2>
-            <RouterLink class="app-link text-sm" to="/trainings">{{ t("dashboard.section.open") }}</RouterLink>
+            <RouterLink class="app-link text-sm" to="/trainings">
+              {{ t("dashboard.section.open") }}
+            </RouterLink>
           </div>
 
           <div class="mt-4">
@@ -120,6 +114,13 @@
         <!-- Quick actions / status -->
         <div class="app-surface p-6 space-y-4">
           <h2 class="text-base font-semibold">{{ t("dashboard.section.quick") }}</h2>
+          <RouterLink class="app-button-secondary w-full justify-start px-4 py-3 text-left" to="/trainings/stats">
+            <div>
+              <div class="font-medium">{{ t("training.stats.open") }}</div>
+              <div class="text-xs opacity-70">{{ t("training.stats.openHint") }}</div>
+            </div>
+          </RouterLink>
+
 
           <div class="grid grid-cols-1 gap-2">
             <button class="app-button-secondary w-full justify-start px-4 py-3 text-left" @click="goProfile">
@@ -200,9 +201,8 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { RouterLink, useRouter } from "vue-router";
 
 import { useI18n } from "../../shared/composables/useI18n";
@@ -210,8 +210,7 @@ import { useAuthStore } from "../../features/auth/stores/authStore";
 import { useTrainingStore } from "../../features/training/stores/trainingStore";
 import { useTheme } from "../../shared/composables/useTheme";
 import { useLocale } from "../../shared/composables/useLocale";
-import { getTrainingTypeMeta } from "../../features/training/ui/trainingTypeMeta";
-import { TrainingEntryRepository } from "../../features/training/persistence/TrainingEntryRepository";
+import { getTrainingTypeMeta } from "../../features/training/utils/trainingTypeMeta";
 
 const router = useRouter();
 
@@ -223,12 +222,6 @@ const { theme, toggleTheme } = useTheme();
 const { locale, setLocale } = useLocale();
 
 const busy = ref(false);
-
-// tick, żeby dashboard reagował na zmiany localStorage entries
-const entriesTick = ref(0);
-function bumpEntriesTick() {
-  entriesTick.value++;
-}
 
 const isAdmin = computed(() => {
   const u: any = auth.currentUser;
@@ -265,19 +258,24 @@ const recentTrainings = computed(() => {
 
 const totalTrainings = computed(() => (trainingStore.items?.length ?? 0).toString());
 
-// Liczymy sumy tylko dla treningów, które istnieją w backendzie (trainingStore.items).
+/**
+ * ✅ Sumy z backendu: duration + distance
+ * (podmień nazwy pól jeśli w store masz inne)
+ */
 const globalTotals = computed(() => {
-  void entriesTick.value;
+  const items: any[] = trainingStore.items ?? [];
 
-  const ids = (trainingStore.items ?? [])
-      .map((x: any) => Number(x.id))
-      .filter((n: number) => Number.isFinite(n));
+  let totalDurationMin = 0;
+  let totalDistanceM = 0;
 
-  if (!ids.length) {
-    return { totalDurationMin: 0, totalDistanceM: 0, totalCaloriesKcal: 0, entriesCount: 0 };
+  for (const tr of items) {
+    totalDurationMin += Number(tr.durationMin ?? tr.duration ?? 0);
+    totalDistanceM += Number(tr.distanceM ?? tr.distanceM ?? 0);
+    // jeśli backend trzyma dystans jako km (np. 5.2), a nie metry:
+    // totalDistanceM += Math.round(Number(tr.distance ?? 0) * 1000);
   }
 
-  return TrainingEntryRepository.totalsForTrainingIds(ids);
+  return { totalDurationMin, totalDistanceM };
 });
 
 function formatDuration(min: number) {
@@ -296,7 +294,6 @@ function formatDistance(meters: number) {
 }
 
 const totalDuration = computed(() => formatDuration(globalTotals.value.totalDurationMin));
-const totalCalories = computed(() => globalTotals.value.totalCaloriesKcal.toString());
 const totalDistance = computed(() => formatDistance(globalTotals.value.totalDistanceM));
 
 const avgSpeedKmh = computed(() => {
@@ -323,7 +320,6 @@ async function refresh() {
   busy.value = true;
   try {
     await trainingStore.fetchList();
-    bumpEntriesTick();
   } finally {
     busy.value = false;
   }
@@ -351,14 +347,8 @@ function toggleLocale() {
 }
 
 onMounted(async () => {
-  window.addEventListener(TrainingEntryRepository.CHANGE_EVENT, bumpEntriesTick);
-
   if (auth.isLoggedIn && !trainingStore.items.length) {
     await refresh();
   }
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener(TrainingEntryRepository.CHANGE_EVENT, bumpEntriesTick);
 });
 </script>

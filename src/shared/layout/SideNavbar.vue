@@ -147,7 +147,7 @@ import { useI18n } from "../composables/useI18n";
 import { useAuthStore } from "../../features/auth/stores/authStore";
 import { useUiStore } from "../stores/uiStore";
 
-import { getTrainingTypeMeta } from "../../features/training/ui/trainingTypeMeta";
+import { getTrainingTypeMeta } from "../../features/training/utils/trainingTypeMeta";
 import {AdminService} from "../../features/admin/services/AdminService.ts";
 
 const auth = useAuthStore();

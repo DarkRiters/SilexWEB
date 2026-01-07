@@ -1,21 +1,21 @@
-export type TrainingStatusDTO = "planned" | "in_progress" | "finished" | string;
-
-export interface TrainingDTO {
+export type ActivityDTO = {
     id: number;
+    user_id: number;
+    name: string | null;
+    type: string | null;
+    note: string | null;
+    photo_path: string | null;
+    distance: number | string | null; // km
+    time: number | null;              // min
+    created_at: string;
+    updated_at: string;
+};
+
+export type TrainingInput = {
     name: string;
     type: string;
-
-    duration?: number;
-    distance?: number;
-    calories?: number;
-
-    status?: TrainingStatusDTO;
-}
-
-export interface TrainingInput {
-    name: string;
-    type: string;
-    duration?: number;
-    calories?: number;
-    distance?: number;
-}
+    note?: string | null;
+    photo_path?: string | null;
+    distanceM?: number;   // UI: metry
+    durationMin?: number; // UI: minuty
+};

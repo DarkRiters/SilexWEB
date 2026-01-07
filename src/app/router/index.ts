@@ -54,7 +54,13 @@ const routes: RouteRecordRaw[] = [
     {
         path: "/trainings",
         name: "trainings",
-        component: () => import("../../features/training/views/TrainingDetailsView.vue"),
+        component: () => import("../../features/training/views/TrainingView.vue"),
+        meta: { requiresAuth: true } satisfies AppRouteMeta,
+    },
+    {
+        path: "/trainings/stats",
+        name: "trainings-stats",
+        component: () => import("../../features/training/views/TrainingStatsView.vue"),
         meta: { requiresAuth: true } satisfies AppRouteMeta,
     },
 

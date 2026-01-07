@@ -204,6 +204,13 @@ export const messages = {
         "training.fields.duration": "Czas",
         "training.fields.distance": "Dystans",
         "training.fields.calories": "Kalorie",
+        "training.fields.distanceM": "Dystans (m)",
+        "training.fields.durationMin": "Czas (min)",
+        "training.fields.note": "Notatka",
+        "training.list.title": "Lista treningów",
+        "training.list.empty": "Brak treningów. Kliknij „{cta}”.",
+        "training.fields.photo": "Zdjęcie",
+
 
         // =====================
         // TRAININGS – UNITS
@@ -236,6 +243,22 @@ export const messages = {
         "training.stats.totalDuration": "Łączny czas",
         "training.stats.totalDistance": "Łączny dystans",
         "training.stats.totalCalories": "Łączne kalorie",
+
+        "training.stats.titlePage": "Statystyki treningów",
+        "training.stats.subtitle": "Dane z API /activities/stats",
+        "training.stats.open": "Statystyki",
+        "training.stats.openHint": "Podsumowanie globalne i miesięczne",
+        "training.stats.backToTrainings": "Treningi",
+        "training.stats.empty": "Brak danych statystycznych.",
+        "training.stats.byType": "Podział według typu",
+        "training.stats.monthly": "Miesięcznie",
+        "training.stats.monthlyEmpty": "Brak danych miesięcznych.",
+        "training.stats.monthlyTypesHint": "Szczegółowy podział typów można dodać później.",
+        "training.stats.kpi.activities": "Liczba aktywności",
+        "training.stats.kpi.distance": "Dystans łącznie",
+        "training.stats.kpi.time": "Czas łącznie",
+        "training.stats.kpi.avg": "Średnia (globalnie)",
+        "training.stats.noteBackend": "Wyliczone po stronie backendu",
 
         // =====================
         // COMMON
@@ -509,6 +532,14 @@ export const messages = {
         "training.fields.duration": "Duration",
         "training.fields.distance": "Distance",
         "training.fields.calories": "Calories",
+        "training.fields.distanceM": "Distance (m)",
+        "training.fields.durationMin": "Time (min)",
+        "training.fields.note": "Note",
+        "training.list.title": "Training list",
+        "training.list.empty": "No trainings yet. Click “{cta}”.",
+        "training.fields.photo": "Photo",
+
+
 
         // =====================
         // TRAININGS – UNITS
@@ -542,6 +573,21 @@ export const messages = {
         "training.stats.totalDistance": "Total distance",
         "training.stats.totalCalories": "Total calories",
 
+        "training.stats.titlePage": "Training statistics",
+        "training.stats.subtitle": "Data from API /activities/stats",
+        "training.stats.open": "Statistics",
+        "training.stats.openHint": "Global and monthly summary",
+        "training.stats.backToTrainings": "Trainings",
+        "training.stats.empty": "No statistics data.",
+        "training.stats.byType": "Breakdown by type",
+        "training.stats.monthly": "Monthly",
+        "training.stats.monthlyEmpty": "No monthly data.",
+        "training.stats.monthlyTypesHint": "Detailed type breakdown can be added later.",
+        "training.stats.kpi.activities": "Activities count",
+        "training.stats.kpi.distance": "Total distance",
+        "training.stats.kpi.time": "Total time",
+        "training.stats.kpi.avg": "Average (global)",
+        "training.stats.noteBackend": "Calculated on backend",
         // =====================
         // COMMON
         // =====================
