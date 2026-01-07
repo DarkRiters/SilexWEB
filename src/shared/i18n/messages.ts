@@ -88,6 +88,21 @@ export const messages = {
         "auth.forgot.submit": "Wyślij link resetujący",
         "auth.forgot.backInfo": "Pamiętasz hasło?",
         "auth.forgot.goToLogin": "Wróć do logowania",
+        "auth.forgot.success": "Jeśli konto istnieje, wysłaliśmy link do resetu hasła na podany adres.",
+        "auth.forgot.error": "Nie udało się wysłać linku resetującego.",
+        "auth.forgot.loading": "Wysyłanie...",
+        "auth.forgot.tryAgain": "Spróbuj ponownie za chwilę.",
+        // =====================
+        // AUTH – RESET PASSWORD (NEW)
+        // =====================
+        "auth.reset.title": "Ustaw nowe hasło",
+        "auth.reset.subtitle": "Wprowadź nowe hasło dla swojego konta.",
+        "auth.reset.submit": "Zapisz nowe hasło",
+        "auth.reset.success": "Hasło zostało zresetowane. Możesz się teraz zalogować.",
+        "auth.reset.error": "Nie udało się zresetować hasła.",
+        "auth.reset.backToLogin": "Wróć do logowania",
+        "auth.reset.missingToken": "Link resetu hasła jest nieprawidłowy lub wygasł.",
+
 
         // =====================
         // AUTH - FIELDS
@@ -377,6 +392,22 @@ export const messages = {
         "auth.forgot.submit": "Send reset link",
         "auth.forgot.backInfo": "Remember your password?",
         "auth.forgot.goToLogin": "Back to login",
+        "auth.forgot.success": "If the account exists, we sent a password reset link to the provided email.",
+        "auth.forgot.error": "Could not send the reset link.",
+        "auth.forgot.loading": "Sending...",
+        "auth.forgot.tryAgain": "Please try again in a moment.",
+        // =====================
+        // AUTH – RESET PASSWORD (NEW)
+        // =====================
+        "auth.reset.title": "Set new password",
+        "auth.reset.subtitle": "Enter a new password for your account.",
+        "auth.reset.submit": "Save new password",
+        "auth.reset.success": "Password has been reset. You can now log in.",
+        "auth.reset.error": "Could not reset password.",
+        "auth.reset.backToLogin": "Back to login",
+        "auth.reset.missingToken": "Password reset link is invalid or has expired.",
+
+
 
         // =====================
         // AUTH - FIELDS

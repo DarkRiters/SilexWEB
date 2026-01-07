@@ -310,7 +310,7 @@ import { useTrainingStore } from "../stores/trainingStore";
 import { useI18n } from "../../../shared/composables/useI18n";
 import { TRAINING_TYPES, type TrainingType, normalizeTrainingType, getTrainingTypeMeta } from "../domain/TrainingType";
 import { estimateCalories } from "../ui/calories";
-import { useProfileStore } from "../../../shared/stores/profileStore";
+import { useProfileStore } from "../../user/stores/profileStore.ts";
 import type { TrainingEntry } from "../domain/TrainingEntry";
 
 const store = useTrainingStore();

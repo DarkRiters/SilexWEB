@@ -204,7 +204,7 @@
 import { computed, onMounted, reactive, ref, watch } from "vue";
 import { useI18n } from "../../../shared/composables/useI18n.ts";
 import { useAuthStore } from "../../auth/stores/authStore.ts";
-import { useProfileStore } from "../../../shared/stores/profileStore";
+import { useProfileStore } from "../stores/profileStore.ts";
 import {
   validateEmail,
   validateRequired,

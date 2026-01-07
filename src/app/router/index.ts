@@ -22,6 +22,12 @@ const routes: RouteRecordRaw[] = [
         meta: { requiresAuth: true } satisfies AppRouteMeta,
     },
     {
+        path: "/reset-password",
+        name: "reset-password",
+        component: () => import("../../features/auth/views/ResetPasswordView.vue"),
+        meta: { guestOnly: true } satisfies AppRouteMeta,
+    },
+    {
         path: "/login",
         name: "login",
         component: LoginView,
