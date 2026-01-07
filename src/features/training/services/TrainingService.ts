@@ -1,91 +1,52 @@
 import { api } from "../../../shared/services/http/api";
-import type { TrainingDTO, TrainingInput } from "../domain/TrainingDTO";
-
-type ActivityDTO = {
-    id: number;
-    user_id: number;
-    started_at: string | null;
-    ended_at: string | null;
-    name: string | null;
-    type: string | null;
-    note: string | null;
-    photo_url: string | null;
-    distance: number | null;
-    created_at: string;
-    updated_at: string;
-};
-
-function minutesBetween(startIso: string | null, endIso: string | null): number {
-    if (!startIso || !endIso) return 0;
-    const a = Date.parse(startIso);
-    const b = Date.parse(endIso);
-    if (!Number.isFinite(a) || !Number.isFinite(b)) return 0;
-    return Math.max(0, Math.floor((b - a) / 60000));
-}
-
-function activityToTrainingDTO(a: ActivityDTO): TrainingDTO {
-    const status = a.ended_at ? "finished" : a.started_at ? "in_progress" : "planned";
-    const duration = minutesBetween(a.started_at, a.ended_at);
-
-    return {
-        id: a.id,
-        name: a.name ?? "(no name)",
-        type: a.type ?? "other",
-        duration,
-        distance: a.distance ?? 0,
-        calories: 0,
-        status,
-    };
-}
+import type { ActivityDTO, TrainingInput } from "../domain/TrainingDTO";
+import { TrainingFactory } from "../domain/TrainingFactory";
+import type {TrainingStatsDTO} from "../domain/TrainingStatsDTO.ts";
 
 export class TrainingService {
-    static async list(): Promise<TrainingDTO[]> {
+    static async list(): Promise<ActivityDTO[]> {
         const { data } = await api.get<ActivityDTO[]>("/activities");
-        return data.map(activityToTrainingDTO);
+        return data;
     }
 
-    static async get(id: number): Promise<TrainingDTO> {
+    static async get(id: number): Promise<ActivityDTO> {
         const { data } = await api.get<ActivityDTO>(`/activities/${id}`);
-        return activityToTrainingDTO(data);
+        return data;
     }
 
-    static async create(payload: TrainingInput): Promise<TrainingDTO> {
-        const now = new Date().toISOString();
-
-        const started = await api.post<ActivityDTO>("/activities/start", {
-            started_at: now,
-        });
-
-        const id = started.data.id;
-
-        const { data } = await api.post<ActivityDTO>(`/activities/finish/${id}`, {
-            ended_at: now,
+    static async create(payload: TrainingInput): Promise<ActivityDTO> {
+        const body = TrainingFactory.toApiInput({
             name: payload.name,
             type: payload.type,
-            note: null,
-            photo_url: null,
-            distance: payload.distance ?? 0,
+            distanceM: payload.distanceM,
+            durationMin: payload.durationMin,
+            note: payload.note ?? null,
+            photo_path: payload.photo_path ?? null,
         });
 
-        return activityToTrainingDTO(data);
+        const { data } = await api.post<ActivityDTO>("/activities/add", body);
+        return data;
     }
 
-    static async update(id: number, payload: TrainingInput): Promise<TrainingDTO> {
-        const endedAt = new Date().toISOString();
-
-        const { data } = await api.post<ActivityDTO>(`/activities/finish/${id}`, {
-            ended_at: endedAt,
+    static async update(id: number, payload: TrainingInput): Promise<ActivityDTO> {
+        const body = TrainingFactory.toApiInput({
             name: payload.name,
             type: payload.type,
-            note: null,
-            photo_url: null,
-            distance: payload.distance ?? 0,
+            distanceM: payload.distanceM,
+            durationMin: payload.durationMin,
+            note: payload.note ?? null,
+            photo_path: payload.photo_path ?? null,
         });
 
-        return activityToTrainingDTO(data);
+        const { data } = await api.put<ActivityDTO>(`/activities/${id}`, body);
+        return data;
     }
 
     static async remove(id: number): Promise<void> {
         await api.delete(`/activities/${id}`);
+    }
+    static async stats(): Promise<TrainingStatsDTO> {
+        const { data } = await api.get<TrainingStatsDTO>("/activities/stats");
+        return data;
     }
 }

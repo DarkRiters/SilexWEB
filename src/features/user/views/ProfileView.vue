@@ -119,103 +119,24 @@
           </button>
         </div>
       </div>
-
-      <!-- FITNESS -->
-      <div class="app-surface p-6 space-y-4">
-        <div class="flex items-center justify-between gap-3">
-          <h2 class="text-lg font-semibold">{{ t("settings.fitness.title") }}</h2>
-
-          <button
-              class="app-button-secondary px-3 py-2 text-sm"
-              @click="resetFitnessProfile"
-              :disabled="isBusy"
-          >
-            {{ t("settings.fitness.reset") }}
-          </button>
-        </div>
-
-        <div class="text-sm opacity-70">
-          {{ t("settings.fitness.info") }}
-        </div>
-
-        <div class="space-y-3">
-          <div>
-            <label class="text-xs opacity-70">{{ t("settings.fitness.weight") }}</label>
-            <input
-                v-model="fitnessForm.weightKg"
-                class="mt-1 app-input"
-                type="number"
-                inputmode="numeric"
-                min="30"
-                max="250"
-                step="1"
-            />
-          </div>
-
-          <div>
-            <label class="text-xs opacity-70">{{ t("settings.fitness.height") }}</label>
-            <input
-                v-model="fitnessForm.heightCm"
-                class="mt-1 app-input"
-                type="number"
-                inputmode="numeric"
-                min="120"
-                max="230"
-                step="1"
-            />
-          </div>
-
-          <div>
-            <label class="text-xs opacity-70">{{ t("settings.fitness.age") }}</label>
-            <input
-                v-model="fitnessForm.age"
-                class="mt-1 app-input"
-                type="number"
-                inputmode="numeric"
-                min="10"
-                max="120"
-                step="1"
-            />
-          </div>
-
-          <button
-              class="app-button w-full"
-              :disabled="!canSaveFitness || isBusy"
-              @click="saveFitnessProfile"
-          >
-            {{ isBusy ? t("common.loading") : t("settings.fitness.save") }}
-          </button>
-
-          <div class="text-xs opacity-60">
-            {{ t("settings.fitness.currentValues") }}
-            <span class="opacity-90">
-              {{ fitness.weightKg ?? "—" }} kg,
-              {{ fitness.heightCm ?? "—" }} cm,
-              {{ fitness.age ?? "—" }}
-            </span>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch } from "vue";
-import { useI18n } from "../../../shared/composables/useI18n.ts";
-import { useAuthStore } from "../../auth/stores/authStore.ts";
-import { useProfileStore } from "../stores/profileStore.ts";
+import { useI18n } from "../../../shared/composables/useI18n";
+import { useAuthStore } from "../../auth/stores/authStore";
 import {
   validateEmail,
   validateRequired,
   validatePasswordConfirm,
   validateCurrentPassword,
   validateNewPassword,
-} from "../../auth/utils/validators.ts";
+} from "../../auth/utils/validators";
 
 const { t } = useI18n();
 const auth = useAuthStore();
-const fitness = useProfileStore();
 
 const isBusy = ref(false);
 
@@ -349,59 +270,4 @@ watch(
     () => hydrateProfile(),
     { deep: true }
 );
-
-// ===== FITNESS PROFILE (LOCAL) =====
-const fitnessForm = reactive({
-  weightKg: (fitness.weightKg ?? "") as number | "",
-  heightCm: (fitness.heightCm ?? "") as number | "",
-  age: (fitness.age ?? "") as number | "",
-});
-
-watch(
-    () => [fitness.weightKg, fitness.heightCm, fitness.age],
-    () => {
-      fitnessForm.weightKg = (fitness.weightKg ?? "") as number | "";
-      fitnessForm.heightCm = (fitness.heightCm ?? "") as number | "";
-      fitnessForm.age = (fitness.age ?? "") as number | "";
-    }
-);
-
-function toNumberOrNull(v: number | ""): number | null {
-  if (v === "") return null;
-  const n = Number(v);
-  if (!Number.isFinite(n)) return null;
-  return Math.floor(n);
-}
-
-const canSaveFitness = computed(() => {
-  const w = toNumberOrNull(fitnessForm.weightKg);
-  const h = toNumberOrNull(fitnessForm.heightCm);
-  const a = toNumberOrNull(fitnessForm.age);
-
-  const anyProvided = w !== null || h !== null || a !== null;
-  if (!anyProvided) return false;
-
-  const okW = w === null || (w >= 30 && w <= 250);
-  const okH = h === null || (h >= 120 && h <= 230);
-  const okA = a === null || (a >= 10 && a <= 120);
-
-  return okW && okH && okA;
-});
-
-function saveFitnessProfile() {
-  const w = toNumberOrNull(fitnessForm.weightKg);
-  const h = toNumberOrNull(fitnessForm.heightCm);
-  const a = toNumberOrNull(fitnessForm.age);
-
-  fitness.setWeightKg(w);
-  fitness.setHeightCm(h);
-  fitness.setAge(a);
-}
-
-function resetFitnessProfile() {
-  fitness.reset();
-  fitnessForm.weightKg = "";
-  fitnessForm.heightCm = "";
-  fitnessForm.age = "";
-}
 </script>
