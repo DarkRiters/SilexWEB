@@ -1,29 +1,30 @@
 <template>
-  <AuthForm
-      :title="t('auth.forgot.title')"
-      :onSubmit="onSubmit">
+  <AuthForm :title="t('auth.forgot.title')" :onSubmit="onSubmit">
     <BaseInput
         id="email"
         :label="t('auth.forgot.subtitle')"
         type="email"
         :placeholder="t('auth.placeholders.email')"
         v-model="email"
-        :error="emailError ? t(emailError): ''"
+        :error="emailError ? t(emailError) : ''"
     />
+
     <template #actions>
-      <BaseButton type="submit" class="bg-red-600 hover:bg-red-500">{{ t('auth.forgot.submit') }}</BaseButton>
+      <BaseButton type="submit" class="app-button w-full">
+        {{ t("auth.forgot.submit") }}
+      </BaseButton>
     </template>
+
     <template #footer>
       <nav class="flex gap-4 justify-center">
-        <RouterLink
-            to="/login"
-        >
-          {{ t('auth.forgot.goToLogin') }}
+        <RouterLink class="app-link" to="/login">
+          {{ t("auth.forgot.goToLogin") }}
         </RouterLink>
       </nav>
     </template>
   </AuthForm>
 </template>
+
 <script setup lang="ts">
 import AuthForm from "../ui/AuthForm.vue";
 import {ref} from "vue";

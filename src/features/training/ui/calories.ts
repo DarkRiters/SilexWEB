@@ -18,14 +18,13 @@ export function estimateCalories(params: {
 
     const type = normalizeTrainingType(params.type);
 
+    // MET orientacyjny (wystarczający do MVP). I tak finalnie dystans będzie ważniejszy dla running/walking/cycling.
     const metByType: Record<TrainingType, number> = {
         running: 9.8,
         walking: 3.5,
         cycling: 7.5,
-        swimming: 8.0,
-        gym: 6.0,
-        boxing: 10.0,
-        yoga: 3.0,
+        skating: 7.0,
+        skateboarding: 5.0,
         other: 5.0,
     };
 
@@ -33,11 +32,21 @@ export function estimateCalories(params: {
     const kcalPerMin = (met * 3.5 * weight) / 200;
     const kcalFromTime = kcalPerMin * duration;
 
+    // Dystansowe przybliżenia (proste, ale logiczne)
     let kcalFromDistance = 0;
-    if (type === "running") kcalFromDistance = weight * distanceKm * 1.0;
-    if (type === "walking") kcalFromDistance = weight * distanceKm * 0.5;
-    if (type === "cycling") kcalFromDistance = weight * distanceKm * 0.3;
 
+    const kcalPerKmByType: Record<TrainingType, number> = {
+        running: 1.0,
+        walking: 0.5,
+        cycling: 0.3,
+        skating: 0.45,        // rolki: sensowny środek
+        skateboarding: 0.25,  // deska: zwykle mniej
+        other: 0.4,           // fallback dystansowy
+    };
+
+    kcalFromDistance = weight * distanceKm * kcalPerKmByType[type];
+
+    // Rolki/deska: dystans istnieje, ale tempo/technika mocno miesza — zostawiamy time-based jako główne źródło.
     const kcal = Math.max(kcalFromTime, kcalFromDistance);
     return Math.round(clamp(kcal, 0, 20000));
 }

@@ -1,39 +1,60 @@
 <template>
-  <header class="w-full flex items-center justify-between px-6 py-3  app-nav">
-    <BaseLogo/>
-    <nav class="flex gap-4">
-      <RouterLink
-          to="/login"
-      >
-        {{ t('auth.login.title') }}
+  <header class="w-full app-nav px-6 py-3">
+    <div class="flex items-center justify-between gap-4">
+      <BaseLogo />
+
+      <nav class="hidden md:flex items-center gap-4">
+        <RouterLink class="app-link" to="/login">
+          {{ t("auth.login.title") }}
+        </RouterLink>
+
+        <RouterLink class="app-link" to="/register">
+          {{ t("auth.register.title") }}
+        </RouterLink>
+
+        <RouterLink class="app-link" to="/forgot-password">
+          {{ t("auth.forgot.title") }}
+        </RouterLink>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <button
+            @click="toggleTheme"
+            class="app-button-secondary px-3 py-2 text-sm"
+            type="button"
+            aria-label="Toggle theme"
+        >
+          {{ theme === "dark" ? "🌙" : "☀️" }}
+        </button>
+
+        <button
+            @click="setLocale(locale === 'pl' ? 'en' : 'pl')"
+            class="app-button-secondary px-3 py-2 text-sm"
+            type="button"
+            aria-label="Toggle locale"
+        >
+          {{ locale === "pl" ? "PL" : "EN" }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile nav -->
+    <nav class="mt-3 flex flex-wrap gap-3 md:hidden">
+      <RouterLink class="app-link text-sm" to="/login">
+        {{ t("auth.login.title") }}
       </RouterLink>
-      <RouterLink
-          to="/register"
-      >
-        {{ t('auth.register.title') }}
+
+      <RouterLink class="app-link text-sm" to="/register">
+        {{ t("auth.register.title") }}
       </RouterLink>
-      <RouterLink
-          to="/forgot-password"
-      >
-        {{ t('auth.forgot.title') }}
+
+      <RouterLink class="app-link text-sm" to="/forgot-password">
+        {{ t("auth.forgot.title") }}
       </RouterLink>
     </nav>
-    <div class="flex gap-4">
-      <button
-          @click="toggleTheme"
-          class="px-2 py-1 rounded-xl app-surface"
-      >
-        {{ theme === 'dark' ? '🌙' : '☀️' }}
-      </button>
-      <button
-          @click="setLocale(locale === 'pl' ? 'en' : 'pl')"
-          class="px-2 py-1 rounded-xl app-surface"
-      >
-        {{ locale === 'pl' ? 'PL' : 'EN' }}
-      </button>
-    </div>
   </header>
 </template>
+
 
 <script setup lang="ts">
 

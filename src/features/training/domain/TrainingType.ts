@@ -4,10 +4,8 @@ export type TrainingType =
     | "running"
     | "walking"
     | "cycling"
-    | "swimming"
-    | "gym"
-    | "boxing"
-    | "yoga"
+    | "skating"       // rolki
+    | "skateboarding" // deskorolka
     | "other";
 
 export type TrainingTypeMeta = {
@@ -20,10 +18,8 @@ export const TRAINING_TYPES = [
     { value: "running", i18nKey: "training.type.running", emoji: "🏃" },
     { value: "walking", i18nKey: "training.type.walking", emoji: "🚶" },
     { value: "cycling", i18nKey: "training.type.cycling", emoji: "🚴" },
-    { value: "swimming", i18nKey: "training.type.swimming", emoji: "🏊" },
-    { value: "gym", i18nKey: "training.type.gym", emoji: "🏋️" },
-    { value: "boxing", i18nKey: "training.type.boxing", emoji: "🥊" },
-    { value: "yoga", i18nKey: "training.type.yoga", emoji: "🧘" },
+    { value: "skating", i18nKey: "training.type.skating", emoji: "🛼" },
+    { value: "skateboarding", i18nKey: "training.type.skateboarding", emoji: "🛹" },
     { value: "other", i18nKey: "training.type.other", emoji: "✨" },
 ] as const satisfies readonly TrainingTypeMeta[];
 

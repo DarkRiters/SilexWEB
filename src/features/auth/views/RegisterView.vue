@@ -37,19 +37,22 @@
     />
 
     <template #actions>
-      <BaseButton type="submit" class="bg-green-600 hover:bg-green-500">
+      <BaseButton type="submit" class="app-button w-full">
         {{ t("auth.register.submit") }}
       </BaseButton>
     </template>
 
     <template #footer>
       <div class="space-y-2">
-        <p v-if="successMessage" class="text-sm text-green-400 text-center">
+        <div
+            v-if="successMessage"
+            class="app-card p-3 border border-green-500/30 bg-green-500/5 text-sm text-slate-900 dark:text-slate-100"
+        >
           {{ successMessage }}
-        </p>
+        </div>
 
         <nav class="flex gap-4 justify-center">
-          <RouterLink to="/login">
+          <RouterLink class="app-link" to="/login">
             {{ t("auth.register.haveAccount") }}
           </RouterLink>
         </nav>

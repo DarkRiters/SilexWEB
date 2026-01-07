@@ -44,7 +44,8 @@ export const messages = {
         // ✅ FITNESS PROFILE (NEW)
         "settings.fitness.title": "Profil fitness (lokalnie)",
         "settings.fitness.reset": "Resetuj",
-        "settings.fitness.info": "Te wartości są przechowywane lokalnie i używane do szacowania kalorii w treningach.",
+        "settings.fitness.info":
+            "Te wartości są przechowywane lokalnie i używane do szacowania kalorii w treningach.",
         "settings.fitness.weight": "Waga (kg)",
         "settings.fitness.height": "Wzrost (cm)",
         "settings.fitness.age": "Wiek",
@@ -176,6 +177,9 @@ export const messages = {
         "training.type.yoga": "Joga",
         "training.type.boxing": "Boks",
         "training.type.other": "Inny",
+        "training.type.skating": "Rolki",
+        "training.type.skateboarding": "Deskorolka",
+
 
         // =====================
         // TRAININGS – FIELDS
@@ -228,6 +232,7 @@ export const messages = {
         "common.save": "Zapisz",
         "common.cancel": "Anuluj",
         "common.delete": "Usuń",
+
         // =====================
         // ADMIN
         // =====================
@@ -243,6 +248,43 @@ export const messages = {
         "admin.users.save": "Zapisz",
         "admin.users.password": "Hasło",
         "admin.users.confirmDelete": "Usunąć użytkownika?",
+
+        // =====================
+        // DASHBOARD (NEW)
+        // =====================
+        "dashboard.title": "Dashboard",
+        "dashboard.welcomeTitle": "Witaj",
+        "dashboard.subtitle.loggedIn": "Zarządzaj treningami i ustawieniami w jednym miejscu.",
+        "dashboard.subtitle.guest": "Zaloguj się, aby zacząć.",
+
+        "dashboard.kpi.hint": "Lista treningów po lewej",
+        "dashboard.kpi.durationHint": "Suma czasu ze wszystkich wpisów (entries) lokalnych.",
+        "dashboard.kpi.caloriesHint": "Suma kalorii ze wszystkich wpisów (entries) lokalnych.",
+        "dashboard.kpi.distanceHint": "Suma dystansu ze wszystkich wpisów (entries) lokalnych.",
+
+        "dashboard.section.recent": "Ostatnie treningi",
+        "dashboard.section.open": "Otwórz →",
+
+        "dashboard.recent.loginHint": "Zaloguj się, aby zobaczyć swoje treningi.",
+        "dashboard.recent.empty": "Brak treningów. Kliknij „{cta}”.",
+
+        "dashboard.section.quick": "Szybkie akcje",
+        "dashboard.quick.profile.title": "Profil",
+        "dashboard.quick.profile.subtitle": "Ustaw nazwę i dane fitness (lokalnie)",
+        "dashboard.quick.theme.title": "Motyw",
+        "dashboard.quick.theme.current": "Aktualnie: {value}",
+        "dashboard.quick.locale.title": "Język",
+        "dashboard.quick.locale.current": "Aktualnie: {value}",
+
+        "dashboard.status.title": "Status",
+        "dashboard.status.loggedIn": "Zalogowany",
+        "dashboard.status.user": "Użytkownik",
+        "dashboard.status.role": "Rola",
+        "dashboard.status.admin": "🛡️ Admin",
+        "dashboard.status.adminPanel": "Panel administratora →",
+
+        "dashboard.stats.globalNote": "Liczone globalnie: dystans / czas z wszystkich wpisów (entries).",
+        "dashboard.stats.avgSpeedLabel": "Średnia prędkość",
     },
 
     en: {
@@ -272,7 +314,6 @@ export const messages = {
         "settings.profile.noChanges": "No changes to save.",
         "settings.profile.emailRequired": "Email is required.",
 
-
         // ✅ PROFILE – EXTRA (NEW)
         "settings.profile.refreshSuccess": "Profile refreshed.",
         "settings.profile.saveSuccess": "Profile saved.",
@@ -292,7 +333,8 @@ export const messages = {
         // ✅ FITNESS PROFILE (NEW)
         "settings.fitness.title": "Fitness profile (local)",
         "settings.fitness.reset": "Reset",
-        "settings.fitness.info": "These values are stored locally and used for calorie estimation in trainings.",
+        "settings.fitness.info":
+            "These values are stored locally and used for calorie estimation in trainings.",
         "settings.fitness.weight": "Weight (kg)",
         "settings.fitness.height": "Height (cm)",
         "settings.fitness.age": "Age",
@@ -424,6 +466,9 @@ export const messages = {
         "training.type.yoga": "Yoga",
         "training.type.boxing": "Boxing",
         "training.type.other": "Other",
+        "training.type.skating": "Skating",
+        "training.type.skateboarding": "Skateboarding",
+
 
         // =====================
         // TRAININGS – FIELDS
@@ -476,6 +521,7 @@ export const messages = {
         "common.save": "Save",
         "common.cancel": "Cancel",
         "common.delete": "Delete",
+
         // =====================
         // ADMIN
         // =====================
@@ -491,6 +537,43 @@ export const messages = {
         "admin.users.save": "Save",
         "admin.users.password": "Password",
         "admin.users.confirmDelete": "Delete user?",
+
+        // =====================
+        // DASHBOARD (NEW)
+        // =====================
+        "dashboard.title": "Dashboard",
+        "dashboard.welcomeTitle": "Welcome",
+        "dashboard.subtitle.loggedIn": "Manage trainings and settings in one place.",
+        "dashboard.subtitle.guest": "Log in to get started.",
+
+        "dashboard.kpi.hint": "Training list on the left",
+        "dashboard.kpi.durationHint": "Sum of duration from all local entries.",
+        "dashboard.kpi.caloriesHint": "Sum of calories from all local entries.",
+        "dashboard.kpi.distanceHint": "Sum of distance from all local entries.",
+
+        "dashboard.section.recent": "Recent trainings",
+        "dashboard.section.open": "Open →",
+
+        "dashboard.recent.loginHint": "Log in to see your trainings.",
+        "dashboard.recent.empty": "No trainings yet. Click “{cta}”.",
+
+        "dashboard.section.quick": "Quick actions",
+        "dashboard.quick.profile.title": "Profile",
+        "dashboard.quick.profile.subtitle": "Set name and fitness data (local)",
+        "dashboard.quick.theme.title": "Theme",
+        "dashboard.quick.theme.current": "Current: {value}",
+        "dashboard.quick.locale.title": "Language",
+        "dashboard.quick.locale.current": "Current: {value}",
+
+        "dashboard.status.title": "Status",
+        "dashboard.status.loggedIn": "Logged in",
+        "dashboard.status.user": "User",
+        "dashboard.status.role": "Role",
+        "dashboard.status.admin": "🛡️ Admin",
+        "dashboard.status.adminPanel": "Admin panel →",
+
+        "dashboard.stats.globalNote": "Global calc: distance / time from all entries.",
+        "dashboard.stats.avgSpeedLabel": "Average speed",
     },
 } as const;
 

@@ -1,180 +1,199 @@
 <template>
-  <div class="p-6 max-w-3xl mx-auto space-y-6">
-    <div class="app-surface rounded-2xl p-6 space-y-4">
-      <div class="flex items-center justify-between">
-        <h1 class="text-lg font-semibold">{{ t("settings.profile.title") }}</h1>
+  <div class="app-page app-shell">
+    <div class="max-w-3xl mx-auto space-y-6">
+      <!-- PROFILE -->
+      <div class="app-surface p-6 space-y-4">
+        <div class="flex items-center justify-between gap-3">
+          <h1 class="text-lg font-semibold">{{ t("settings.profile.title") }}</h1>
 
-        <button class="text-sm opacity-70 hover:opacity-100" @click="refresh">
-          {{ t("common.refresh") }}
-        </button>
-      </div>
-
-      <div v-if="profileError" class="rounded-xl p-3 border border-red-500/30 text-red-200">
-        {{ t("common.error") }}: {{ profileError }}
-      </div>
-
-      <div v-if="profileSuccess" class="rounded-xl p-3 border border-green-500/30 text-green-200">
-        {{ profileSuccess }}
-      </div>
-
-      <div class="space-y-3">
-        <div>
-          <label class="text-xs opacity-70">{{ t("auth.fields.name") }}</label>
-          <input
-              v-model="profileForm.name"
-              class="mt-1 w-full rounded-xl px-3 py-2 app-surface border border-white/10"
-              type="text"
-          />
+          <button
+              class="app-button-secondary px-3 py-2 text-sm"
+              :disabled="isBusy"
+              @click="refresh"
+          >
+            {{ t("common.refresh") }}
+          </button>
         </div>
 
-        <div>
-          <label class="text-xs opacity-70">{{ t("auth.fields.email") }}</label>
-          <input
-              v-model="profileForm.email"
-              class="mt-1 w-full rounded-xl px-3 py-2 app-surface border border-white/10"
-              type="email"
-          />
-        </div>
-
-        <button
-            class="w-full rounded-xl px-4 py-2 font-medium bg-green-600 hover:bg-green-500 disabled:opacity-50"
-            :disabled="!canSaveProfile || isBusy"
-            @click="saveProfile"
+        <div
+            v-if="profileError"
+            class="app-card p-4 border border-red-500/30 bg-red-500/5 text-sm text-slate-900 dark:text-slate-100"
         >
-          {{ isBusy ? t("common.loading") : t("settings.profile.save") }}
-        </button>
+          <span class="font-medium">{{ t("common.error") }}:</span>
+          {{ profileError }}
+        </div>
 
-        <button
-            v-if="auth.isAdmin"
-            class="w-full rounded-xl px-4 py-2 font-medium border border-white/10 hover:opacity-90"
-            type="button"
-            @click="openAdminPanel"
+        <div
+            v-if="profileSuccess"
+            class="app-card p-4 border border-green-500/30 bg-green-500/5 text-sm text-slate-900 dark:text-slate-100"
         >
-          {{ t("admin.panel.open") }}
-        </button>
-      </div>
-    </div>
-
-    <div class="app-surface rounded-2xl p-6 space-y-4">
-      <h2 class="text-lg font-semibold">{{ t("settings.password.title") }}</h2>
-
-      <div v-if="passwordError" class="rounded-xl p-3 border border-red-500/30 text-red-200">
-        {{ t("common.error") }}: {{ passwordError }}
-      </div>
-
-      <div v-if="passwordSuccess" class="rounded-xl p-3 border border-green-500/30 text-green-200">
-        {{ passwordSuccess }}
-      </div>
-
-      <div class="space-y-3">
-        <div>
-          <label class="text-xs opacity-70">{{ t("settings.password.current") }}</label>
-          <input
-              v-model="passwordForm.currentPassword"
-              class="mt-1 w-full rounded-xl px-3 py-2 app-surface border border-white/10"
-              type="password"
-              autocomplete="current-password"
-          />
+          {{ profileSuccess }}
         </div>
 
-        <div>
-          <label class="text-xs opacity-70">{{ t("settings.password.new") }}</label>
-          <input
-              v-model="passwordForm.newPassword"
-              class="mt-1 w-full rounded-xl px-3 py-2 app-surface border border-white/10"
-              type="password"
-              autocomplete="new-password"
-          />
-        </div>
+        <div class="space-y-3">
+          <div>
+            <label class="text-xs opacity-70">{{ t("auth.fields.name") }}</label>
+            <input v-model="profileForm.name" class="mt-1 app-input" type="text" />
+          </div>
 
-        <div>
-          <label class="text-xs opacity-70">{{ t("settings.password.confirm") }}</label>
-          <input
-              v-model="passwordForm.newPasswordConfirm"
-              class="mt-1 w-full rounded-xl px-3 py-2 app-surface border border-white/10"
-              type="password"
-              autocomplete="new-password"
-          />
-        </div>
+          <div>
+            <label class="text-xs opacity-70">{{ t("auth.fields.email") }}</label>
+            <input v-model="profileForm.email" class="mt-1 app-input" type="email" />
+          </div>
 
-        <button
-            class="w-full rounded-xl px-4 py-2 font-medium border border-white/10 hover:opacity-90 disabled:opacity-50"
-            :disabled="!canChangePassword || isBusy"
-            @click="changePassword"
+          <button
+              class="app-button w-full"
+              :disabled="!canSaveProfile || isBusy"
+              @click="saveProfile"
+          >
+            {{ isBusy ? t("common.loading") : t("settings.profile.save") }}
+          </button>
+
+          <button
+              v-if="auth.isAdmin"
+              class="app-button-secondary w-full"
+              type="button"
+              @click="openAdminPanel"
+          >
+            {{ t("admin.panel.open") }}
+          </button>
+        </div>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="app-surface p-6 space-y-4">
+        <h2 class="text-lg font-semibold">{{ t("settings.password.title") }}</h2>
+
+        <div
+            v-if="passwordError"
+            class="app-card p-4 border border-red-500/30 bg-red-500/5 text-sm text-slate-900 dark:text-slate-100"
         >
-          {{ isBusy ? t("common.loading") : t("settings.password.submit") }}
-        </button>
-      </div>
-    </div>
-
-    <div class="app-surface rounded-2xl p-6 space-y-4">
-      <div class="flex items-center justify-between">
-        <h2 class="text-lg font-semibold">{{ t("settings.fitness.title") }}</h2>
-
-        <button class="text-sm opacity-70 hover:opacity-100" @click="resetFitnessProfile" :disabled="isBusy">
-          {{ t("settings.fitness.reset") }}
-        </button>
-      </div>
-
-      <div class="text-sm opacity-70">
-        {{ t("settings.fitness.info") }}
-      </div>
-
-      <div class="space-y-3">
-        <div>
-          <label class="text-xs opacity-70">{{ t("settings.fitness.weight") }}</label>
-          <input
-              v-model="fitnessForm.weightKg"
-              class="mt-1 w-full rounded-xl px-3 py-2 app-surface border border-white/10"
-              type="number"
-              inputmode="numeric"
-              min="30"
-              max="250"
-              step="1"
-          />
+          <span class="font-medium">{{ t("common.error") }}:</span>
+          {{ passwordError }}
         </div>
 
-        <div>
-          <label class="text-xs opacity-70">{{ t("settings.fitness.height") }}</label>
-          <input
-              v-model="fitnessForm.heightCm"
-              class="mt-1 w-full rounded-xl px-3 py-2 app-surface border border-white/10"
-              type="number"
-              inputmode="numeric"
-              min="120"
-              max="230"
-              step="1"
-          />
-        </div>
-
-        <div>
-          <label class="text-xs opacity-70">{{ t("settings.fitness.age") }}</label>
-          <input
-              v-model="fitnessForm.age"
-              class="mt-1 w-full rounded-xl px-3 py-2 app-surface border border-white/10"
-              type="number"
-              inputmode="numeric"
-              min="10"
-              max="120"
-              step="1"
-          />
-        </div>
-
-        <button
-            class="w-full rounded-xl px-4 py-2 font-medium bg-green-600 hover:bg-green-500 disabled:opacity-50"
-            :disabled="!canSaveFitness || isBusy"
-            @click="saveFitnessProfile"
+        <div
+            v-if="passwordSuccess"
+            class="app-card p-4 border border-green-500/30 bg-green-500/5 text-sm text-slate-900 dark:text-slate-100"
         >
-          {{ isBusy ? t("common.loading") : t("settings.fitness.save") }}
-        </button>
+          {{ passwordSuccess }}
+        </div>
 
-        <div class="text-xs opacity-60">
-          {{ t("settings.fitness.currentValues") }}
-          <span class="opacity-90">
-            {{ fitness.weightKg ?? "—" }} kg,
-            {{ fitness.heightCm ?? "—" }} cm,
-            {{ fitness.age ?? "—" }}
-          </span>
+        <div class="space-y-3">
+          <div>
+            <label class="text-xs opacity-70">{{ t("settings.password.current") }}</label>
+            <input
+                v-model="passwordForm.currentPassword"
+                class="mt-1 app-input"
+                type="password"
+                autocomplete="current-password"
+            />
+          </div>
+
+          <div>
+            <label class="text-xs opacity-70">{{ t("settings.password.new") }}</label>
+            <input
+                v-model="passwordForm.newPassword"
+                class="mt-1 app-input"
+                type="password"
+                autocomplete="new-password"
+            />
+          </div>
+
+          <div>
+            <label class="text-xs opacity-70">{{ t("settings.password.confirm") }}</label>
+            <input
+                v-model="passwordForm.newPasswordConfirm"
+                class="mt-1 app-input"
+                type="password"
+                autocomplete="new-password"
+            />
+          </div>
+
+          <button
+              class="app-button-secondary w-full"
+              :disabled="!canChangePassword || isBusy"
+              @click="changePassword"
+          >
+            {{ isBusy ? t("common.loading") : t("settings.password.submit") }}
+          </button>
+        </div>
+      </div>
+
+      <!-- FITNESS -->
+      <div class="app-surface p-6 space-y-4">
+        <div class="flex items-center justify-between gap-3">
+          <h2 class="text-lg font-semibold">{{ t("settings.fitness.title") }}</h2>
+
+          <button
+              class="app-button-secondary px-3 py-2 text-sm"
+              @click="resetFitnessProfile"
+              :disabled="isBusy"
+          >
+            {{ t("settings.fitness.reset") }}
+          </button>
+        </div>
+
+        <div class="text-sm opacity-70">
+          {{ t("settings.fitness.info") }}
+        </div>
+
+        <div class="space-y-3">
+          <div>
+            <label class="text-xs opacity-70">{{ t("settings.fitness.weight") }}</label>
+            <input
+                v-model="fitnessForm.weightKg"
+                class="mt-1 app-input"
+                type="number"
+                inputmode="numeric"
+                min="30"
+                max="250"
+                step="1"
+            />
+          </div>
+
+          <div>
+            <label class="text-xs opacity-70">{{ t("settings.fitness.height") }}</label>
+            <input
+                v-model="fitnessForm.heightCm"
+                class="mt-1 app-input"
+                type="number"
+                inputmode="numeric"
+                min="120"
+                max="230"
+                step="1"
+            />
+          </div>
+
+          <div>
+            <label class="text-xs opacity-70">{{ t("settings.fitness.age") }}</label>
+            <input
+                v-model="fitnessForm.age"
+                class="mt-1 app-input"
+                type="number"
+                inputmode="numeric"
+                min="10"
+                max="120"
+                step="1"
+            />
+          </div>
+
+          <button
+              class="app-button w-full"
+              :disabled="!canSaveFitness || isBusy"
+              @click="saveFitnessProfile"
+          >
+            {{ isBusy ? t("common.loading") : t("settings.fitness.save") }}
+          </button>
+
+          <div class="text-xs opacity-60">
+            {{ t("settings.fitness.currentValues") }}
+            <span class="opacity-90">
+              {{ fitness.weightKg ?? "—" }} kg,
+              {{ fitness.heightCm ?? "—" }} cm,
+              {{ fitness.age ?? "—" }}
+            </span>
+          </div>
         </div>
       </div>
     </div>

@@ -23,23 +23,24 @@
     />
 
     <template #actions>
-      <BaseButton type="submit" class="bg-green-600 hover:bg-green-500">
+      <BaseButton type="submit" class="app-button w-full">
         {{ t("auth.login.submit") }}
       </BaseButton>
     </template>
 
     <template #footer>
       <nav class="flex gap-4 justify-center">
-        <RouterLink to="/register">
+        <RouterLink class="app-link" to="/register">
           {{ t("auth.login.noAccount") }}
         </RouterLink>
-        <RouterLink to="/forgot-password">
+        <RouterLink class="app-link" to="/forgot-password">
           {{ t("auth.login.forgotPassword") }}
         </RouterLink>
       </nav>
     </template>
   </AuthForm>
 </template>
+
 
 <script setup lang="ts">
 import { ref } from "vue";
@@ -59,7 +60,7 @@ import { router } from "../../../app/router";
 const auth = useAuthStore();
 const { t } = useI18n();
 
-const email = ref("dev@silex.local");
+const email = ref("");
 const password = ref("");
 
 const emailError = ref<MessageKey | null>(null);

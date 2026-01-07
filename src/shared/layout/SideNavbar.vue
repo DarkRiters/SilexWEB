@@ -1,37 +1,37 @@
 <template>
   <div>
     <aside
-        class="fixed top-0 left-0 h-screen w-64 app-nav flex flex-col border-r transition-transform duration-300"
+        class="fixed top-0 left-0 h-screen w-64 app-nav flex flex-col transition-transform duration-300"
         :class="ui.isSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
     >
-      <div class="py-3 mb-4 border-b flex justify-center app-nav">
+      <!-- Logo -->
+      <div class="py-3 mb-4 border-b border-slate-200 dark:border-slate-700 flex justify-center">
         <BaseLogo />
       </div>
 
+      <!-- List -->
       <div class="flex-1 overflow-y-auto py-2 px-2 space-y-2">
         <div class="px-2 text-xs opacity-60">
           {{ t("training.title") }}
         </div>
 
         <template v-if="auth.isLoggedIn">
+          <!-- Create -->
           <button
               type="button"
-              class="w-full rounded-xl px-3 py-3 font-medium border border-white/10 hover:opacity-90 transition app-surface"
+              class="app-button w-full justify-center"
               @click="goCreate"
           >
             + {{ t("training.addNew") }}
           </button>
 
+          <!-- Items -->
           <button
               v-for="tr in trainingStore.items"
               :key="tr.id"
               type="button"
-              class="w-full text-left rounded-xl px-3 py-3 border transition"
-              :class="
-              tr.id === trainingStore.selectedId
-                ? 'border-sky-400 app-surface'
-                : 'border-white/10 hover:app-surface'
-            "
+              class="app-nav-item"
+              :class="tr.id === trainingStore.selectedId ? 'app-nav-item-active' : 'app-nav-item-idle'"
               @click="openTraining(tr.id)"
           >
             <div class="font-medium truncate flex items-center gap-2">
@@ -50,9 +50,10 @@
 
           <div
               v-if="trainingStore.error"
-              class="rounded-xl p-2 text-xs border border-red-500/30 text-red-200"
+              class="app-card p-3 border border-red-500/30 bg-red-500/5 text-xs text-slate-900 dark:text-slate-100"
           >
-            {{ t("common.error") }}: {{ trainingStore.error.message }}
+            <span class="font-medium">{{ t("common.error") }}:</span>
+            {{ trainingStore.error.message }}
           </div>
         </template>
 
@@ -61,64 +62,66 @@
         </div>
       </div>
 
-      <div class="px-3 py-4 app-nav">
-        <div class="app-surface rounded-2xl px-4 py-3 text-xs space-y-3">
-          <div class="flex items-center justify-between">
+      <!-- Footer / user -->
+      <div class="px-3 py-4">
+        <div class="app-surface px-4 py-3 text-xs space-y-3">
+          <div class="flex items-center justify-between gap-3">
             <span class="truncate max-w-[150px]">{{ userName }}</span>
 
             <BaseDropdown>
               <template #trigger>
-                <button class="px-2 py-1 rounded-xl app-surface">⚙️</button>
+                <button class="app-button-secondary px-3 py-2 text-sm">⚙️</button>
               </template>
 
               <div class="space-y-2 text-xs">
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between gap-3">
                   <span>{{ t("settings.theme.title") }}</span>
-                  <button @click="toggleTheme" class="px-2 py-1 rounded-xl app-surface">
+                  <button @click="toggleTheme" class="app-button-secondary px-3 py-1 text-xs">
                     {{ theme === "dark" ? "🌙" : "☀️" }}
                   </button>
                 </div>
 
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between gap-3">
                   <span>{{ t("settings.locale.title") }}</span>
                   <button
                       @click="setLocale(locale === 'pl' ? 'en' : 'pl')"
-                      class="px-2 py-1 rounded-xl app-surface"
+                      class="app-button-secondary px-3 py-1 text-xs"
                   >
                     {{ locale === "pl" ? "PL" : "EN" }}
                   </button>
                 </div>
 
                 <div class="flex items-center justify-between">
-                  <RouterLink to="/profile">
-                    <span>{{ t("settings.profile.open") }}</span>
+                  <RouterLink class="app-link" to="/profile">
+                    {{ t("settings.profile.open") }}
                   </RouterLink>
                 </div>
 
                 <div v-if="canSeeAdmin" class="flex items-center justify-between">
-                <RouterLink to="/admin/users">
-                    <span>{{ t("admin.panel.open") }}</span>
+                  <RouterLink class="app-link" to="/admin/users">
+                    {{ t("admin.panel.open") }}
                   </RouterLink>
                 </div>
               </div>
             </BaseDropdown>
           </div>
 
-          <div class="app-footer" v-if="auth.isLoggedIn">
-            <button type="button" @click="onLogout">
+          <div class="pt-3 app-divider" v-if="auth.isLoggedIn">
+            <button type="button" class="app-link" @click="onLogout">
               {{ t("userPanel.logout") }}
             </button>
           </div>
 
-          <div v-else>
-            <nav class="flex flex-col gap-1 app-footer">
-              <RouterLink to="/login">{{ t("userPanel.login") }}</RouterLink>
+          <div class="pt-3 app-divider" v-else>
+            <nav class="flex flex-col gap-1">
+              <RouterLink class="app-link" to="/login">{{ t("userPanel.login") }}</RouterLink>
             </nav>
           </div>
         </div>
       </div>
     </aside>
 
+    <!-- Toggle handle -->
     <button
         @click="ui.toggleSidebar()"
         class="fixed top-1/2 z-50 w-6 h-16 flex items-center justify-center rounded-r-full app-surface text-sm shadow transition-all duration-300"
@@ -128,6 +131,7 @@
     </button>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import {computed, onMounted, ref, watch} from "vue";
