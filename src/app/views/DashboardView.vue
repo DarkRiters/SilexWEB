@@ -258,10 +258,7 @@ const recentTrainings = computed(() => {
 
 const totalTrainings = computed(() => (trainingStore.items?.length ?? 0).toString());
 
-/**
- * ✅ Sumy z backendu: duration + distance
- * (podmień nazwy pól jeśli w store masz inne)
- */
+
 const globalTotals = computed(() => {
   const items: any[] = trainingStore.items ?? [];
 
@@ -271,8 +268,6 @@ const globalTotals = computed(() => {
   for (const tr of items) {
     totalDurationMin += Number(tr.durationMin ?? tr.duration ?? 0);
     totalDistanceM += Number(tr.distanceM ?? tr.distanceM ?? 0);
-    // jeśli backend trzyma dystans jako km (np. 5.2), a nie metry:
-    // totalDistanceM += Math.round(Number(tr.distance ?? 0) * 1000);
   }
 
   return { totalDurationMin, totalDistanceM };

@@ -10,11 +10,6 @@ function toNumber(v: unknown): number {
     return Number.isFinite(n) ? n : 0;
 }
 
-/**
- * UWAGA: backend zwraca pole `time_seconds`,
- * ale w praktyce to są MINUTY w Twoich danych.
- * Dlatego wszędzie traktujemy to jako MINUTY.
- */
 export const useTrainingStatsStore = defineStore("training-stats", () => {
     const stats = ref<TrainingStatsDTO | null>(null);
     const action = useAsyncAction();
@@ -27,11 +22,11 @@ export const useTrainingStatsStore = defineStore("training-stats", () => {
 
     const totalActivities = computed(() => overall.value?.activities ?? 0);
     const totalDistanceKm = computed(() => toNumber(overall.value?.distance));
-    const totalTimeMinutes = computed(() => toNumber(overall.value?.time_seconds)); // ✅ MINUTY
+    const totalTimeMinutes = computed(() => toNumber(overall.value?.time_seconds));
 
     const avgSpeedKmh = computed(() => {
         const km = totalDistanceKm.value;
-        const hours = totalTimeMinutes.value / 60; // ✅ min -> h
+        const hours = totalTimeMinutes.value / 60;
         if (km <= 0 || hours <= 0) return 0;
         return km / hours;
     });

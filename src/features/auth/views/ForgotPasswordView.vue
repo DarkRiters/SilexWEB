@@ -76,7 +76,6 @@ async function onSubmit() {
   try {
     await auth.requestPasswordReset(email.value);
 
-    // UX: zawsze success (żeby nie zdradzać czy email istnieje)
     notice.type = "success";
   } catch (e: any) {
     notice.type = "error";

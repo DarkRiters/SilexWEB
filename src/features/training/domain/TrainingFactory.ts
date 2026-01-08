@@ -30,7 +30,7 @@ export class TrainingFactory {
 
     static toApiInput(model: {
         name: string;
-        type: unknown;         // UI type
+        type: unknown;
         distanceM?: number;
         durationMin?: number;
         note?: string | null;
@@ -43,8 +43,8 @@ export class TrainingFactory {
             type: uiTypeToApiType(model.type),
             note: model.note ?? null,
             photo_path: model.photo_path ?? null,
-            distance: km, // backend km
-            time: Math.max(0, Math.floor(model.durationMin ?? 0)), // backend min
+            distance: km,
+            time: Math.max(0, Math.floor(model.durationMin ?? 0)),
         };
     }
 }

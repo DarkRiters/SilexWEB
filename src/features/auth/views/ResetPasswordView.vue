@@ -139,7 +139,6 @@ async function onSubmit() {
   try {
     isBusy.value = true;
 
-    // Laravel expects: token, email, password, password_confirmation
     await api.post("/reset-password", {
       token: token.value,
       email: email.value.trim(),
@@ -149,12 +148,10 @@ async function onSubmit() {
 
     success.value = t("auth.reset.success");
 
-    // opcjonalnie: po 1.2s przekieruj do logowania
     setTimeout(() => {
       router.push("/login");
     }, 1200);
   } catch (e: any) {
-    // jeśli masz helper extractLaravelError, użyj go tu
     const msg =
         e?.response?.data?.message ||
         e?.message ||

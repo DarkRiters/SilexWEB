@@ -14,7 +14,7 @@ export type TrainingStatsOverallDTO = {
 };
 
 export type TrainingStatsMonthlyDTO = {
-    month: string; // "YYYY-MM"
+    month: string;
     activities: number;
     distance: number | string | null;
     time_seconds: number | string | null;

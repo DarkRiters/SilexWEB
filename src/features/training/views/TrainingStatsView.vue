@@ -208,10 +208,6 @@ function toNumber(v: unknown): number {
   return Number.isFinite(n) ? n : 0;
 }
 
-/**
- * ✅ UWAGA: backend zwraca pole `time_seconds`, ale u Ciebie to są MINUTY.
- * Dlatego wszędzie traktujemy to jako minuty (bez dzielenia przez 60/3600).
- */
 function toMinutes(raw: unknown): number {
   return Math.max(0, Math.floor(toNumber(raw)));
 }
@@ -243,7 +239,7 @@ function kmToMetersLabel(kmRaw: unknown): string {
 
 function calcAvgSpeedKmh(distanceKmRaw: unknown, timeMinutesRaw: unknown): number {
   const km = Math.max(0, toNumber(distanceKmRaw));
-  const h = toMinutes(timeMinutesRaw) / 60; // ✅ min -> h
+  const h = toMinutes(timeMinutesRaw) / 60;
   if (km <= 0 || h <= 0) return 0;
   return km / h;
 }

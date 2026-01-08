@@ -5,8 +5,8 @@ export type ActivityDTO = {
     type: string | null;
     note: string | null;
     photo_path: string | null;
-    distance: number | string | null; // km
-    time: number | null;              // min
+    distance: number | string | null;
+    time: number | null;
     created_at: string;
     updated_at: string;
 };
@@ -16,6 +16,6 @@ export type TrainingInput = {
     type: string;
     note?: string | null;
     photo_path?: string | null;
-    distanceM?: number;   // UI: metry
-    durationMin?: number; // UI: minuty
+    distanceM?: number;
+    durationMin?: number;
 };

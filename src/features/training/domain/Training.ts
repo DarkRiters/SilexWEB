@@ -7,8 +7,8 @@ export interface Training {
     name: string;
     type: TrainingType;
 
-    durationMin: number; // backend time (min)
-    distanceM: number;   // metry (UI trzyma metry)
+    durationMin: number;
+    distanceM: number;
 
     note?: string | null;
     photo_path?: string | null;
