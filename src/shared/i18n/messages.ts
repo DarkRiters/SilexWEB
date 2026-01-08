@@ -260,6 +260,22 @@ export const messages = {
         "training.stats.kpi.avg": "Średnia (globalnie)",
         "training.stats.noteBackend": "Wyliczone po stronie backendu",
 
+        "training.stats.apiHint": "Dane z API:",
+        "training.stats.timeFieldHint": "czas: minuty w polu",
+        "training.stats.distanceHint": "dystans: km",
+        "training.stats.actions.back": "Wróć",
+        "training.stats.kpi.totalActivities": "Łączna liczba treningów",
+        "training.stats.kpi.totalTime": "Łączny czas",
+        "training.stats.kpi.totalDistance": "Łączny dystans",
+        "training.stats.sections.typesOverall": "Podsumowanie (łącznie) — typy",
+        "training.stats.sections.monthly": "Miesiące",
+        "training.stats.cards.distance": "Łączny dystans",
+        "training.stats.cards.time": "Łączny czas",
+        "training.stats.cards.avgSpeed": "Średnia prędkość",
+        "training.stats.cards.pace": "Tempo",
+        "training.stats.entriesCount": "{count} wpisów",
+        "training.stats.monthlyTypesCount": "Typy w miesiącu: {count}",
+
         // =====================
         // COMMON
         // =====================
@@ -588,6 +604,23 @@ export const messages = {
         "training.stats.kpi.time": "Total time",
         "training.stats.kpi.avg": "Average (global)",
         "training.stats.noteBackend": "Calculated on backend",
+
+        "training.stats.apiHint": "API data:",
+        "training.stats.timeFieldHint": "time: minutes in field",
+        "training.stats.distanceHint": "distance: km",
+        "training.stats.actions.back": "Back",
+        "training.stats.kpi.totalActivities": "Total trainings",
+        "training.stats.kpi.totalTime": "Total time",
+        "training.stats.kpi.totalDistance": "Total distance",
+        "training.stats.sections.typesOverall": "Overall summary — types",
+        "training.stats.sections.monthly": "Months",
+        "training.stats.cards.distance": "Total distance",
+        "training.stats.cards.time": "Total time",
+        "training.stats.cards.avgSpeed": "Average speed",
+        "training.stats.cards.pace": "Pace",
+        "training.stats.entriesCount": "{count} entries",
+        "training.stats.monthlyTypesCount": "Types in month: {count}",
+
         // =====================
         // COMMON
         // =====================

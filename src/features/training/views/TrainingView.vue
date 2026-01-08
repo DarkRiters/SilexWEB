@@ -221,45 +221,7 @@
         </div>
       </div>
 
-      <!-- LIST -->
-      <div class="app-surface p-6 space-y-4">
-        <div class="flex items-center justify-between">
-          <h2 class="text-lg font-semibold">{{ t("training.list.title") }}</h2>
-          <div class="text-xs opacity-60">{{ store.items.length }}</div>
-        </div>
 
-        <div v-if="store.items.length === 0" class="text-sm opacity-70">
-          {{ t("training.list.empty", { cta: t("training.addNew") }) }}
-        </div>
-
-        <div v-else class="space-y-2">
-          <button
-              v-for="tr in store.items"
-              :key="tr.id"
-              type="button"
-              class="w-full text-left app-surface app-surface-hover px-4 py-3"
-              @click="openTraining(tr.id)"
-          >
-            <div class="flex items-center justify-between gap-3">
-              <div class="min-w-0">
-                <div class="flex items-center gap-2 font-medium">
-                  <span class="shrink-0">{{ getTrainingTypeMeta(tr.type).emoji }}</span>
-                  <span class="truncate">{{ tr.name }}</span>
-                </div>
-                <div class="text-xs opacity-70 truncate">
-                  {{ t(getTrainingTypeMeta(tr.type).i18nKey) }}
-                </div>
-              </div>
-
-              <div class="text-xs opacity-70 shrink-0 flex items-center gap-2">
-                <span>{{ tr.distanceM }} m</span>
-                <span class="opacity-40">•</span>
-                <span>{{ tr.durationMin }} min</span>
-              </div>
-            </div>
-          </button>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -384,11 +346,6 @@ async function removeTraining() {
   else hydrateFromSelected();
 }
 
-function openTraining(id: number) {
-  store.setMode("details");
-  store.selectById(id);
-  void store.fetchDetails(id);
-}
 
 function switchToCreate() {
   store.setMode("create");

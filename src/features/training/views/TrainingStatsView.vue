@@ -11,8 +11,6 @@
             </h1>
 
             <div v-if="store.stats" class="text-xs opacity-60">
-              Dane z API: <span class="opacity-80">/activities/stats</span>
-              (czas: <b>minuty</b> w polu <code>time_seconds</code>, dystans: km)
             </div>
           </div>
 
@@ -22,17 +20,18 @@
             </button>
 
             <button class="app-button-secondary" @click="goBack" :disabled="store.isLoading">
-              Wróć
+              {{ t("training.stats.actions.back") }}
             </button>
           </div>
         </div>
       </div>
 
-      <!-- Loading / Error -->
+      <!-- Loading -->
       <div v-if="store.isLoading && !store.stats" class="app-surface p-6 text-sm opacity-70">
         {{ t("common.loading") }}
       </div>
 
+      <!-- Error -->
       <div
           v-else-if="store.error"
           class="app-surface p-6 border border-red-500/30 bg-red-500/5 text-sm text-slate-900 dark:text-slate-100"
@@ -41,16 +40,17 @@
         {{ store.error?.message ?? String(store.error) }}
       </div>
 
+      <!-- Content -->
       <template v-else-if="store.stats && store.overall">
         <!-- KPIs -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="app-surface p-5">
-            <div class="text-xs opacity-70">Łączna liczba treningów</div>
+            <div class="text-xs opacity-70">{{ t("training.stats.kpi.totalActivities") }}</div>
             <div class="mt-1 text-2xl font-semibold">{{ store.overall.activities }}</div>
           </div>
 
           <div class="app-surface p-5">
-            <div class="text-xs opacity-70">Łączny czas</div>
+            <div class="text-xs opacity-70">{{ t("training.stats.kpi.totalTime") }}</div>
             <div class="mt-1 text-2xl font-semibold">
               {{ formatMinutes(store.overall.time_seconds) }}
             </div>
@@ -60,24 +60,26 @@
           </div>
 
           <div class="app-surface p-5">
-            <div class="text-xs opacity-70">Łączny dystans</div>
+            <div class="text-xs opacity-70">{{ t("training.stats.kpi.totalDistance") }}</div>
             <div class="mt-1 text-2xl font-semibold">
               {{ formatKm(store.overall.distance) }}
             </div>
             <div class="mt-2 text-xs opacity-70">
-              (= {{ kmToMetersLabel(store.overall.distance) }})
+              ({{ kmToMetersLabel(store.overall.distance) }})
             </div>
           </div>
         </div>
 
-        <!-- Types overall -->
+        <!-- Overall types -->
         <div class="app-surface p-6 mt-4 space-y-3">
           <div class="flex items-center justify-between">
-            <h2 class="text-base font-semibold">Podsumowanie (łącznie) — typy</h2>
+            <h2 class="text-base font-semibold">{{ t("training.stats.sections.typesOverall") }}</h2>
             <div class="text-xs opacity-60">{{ overallTypeRows.length }}</div>
           </div>
 
-          <div v-if="overallTypeRows.length === 0" class="text-sm opacity-70">Brak danych.</div>
+          <div v-if="overallTypeRows.length === 0" class="text-sm opacity-70">
+            {{ t("training.stats.empty") }}
+          </div>
 
           <div v-else class="space-y-2">
             <div
@@ -91,7 +93,9 @@
                     <span class="shrink-0">{{ row.emoji }}</span>
                     <span class="truncate">{{ row.label }}</span>
                   </div>
-                  <div class="text-xs opacity-70 truncate">{{ row.activities }} wpisów</div>
+                  <div class="text-xs opacity-70 truncate">
+                    {{ t("training.stats.entriesCount", { count: row.activities }) }}
+                  </div>
                 </div>
 
                 <div class="text-xs opacity-70 shrink-0 text-right">
@@ -106,47 +110,50 @@
         <!-- Monthly -->
         <div class="app-surface p-6 mt-4 space-y-3">
           <div class="flex items-center justify-between">
-            <h2 class="text-base font-semibold">Miesiące</h2>
+            <h2 class="text-base font-semibold">{{ t("training.stats.sections.monthly") }}</h2>
             <div class="text-xs opacity-60">{{ store.monthly.length }}</div>
           </div>
 
           <div v-if="store.monthly.length === 0" class="text-sm opacity-70">
-            Brak danych miesięcznych.
+            {{ t("training.stats.monthlyEmpty") }}
           </div>
 
           <div v-else class="space-y-4">
             <div v-for="m in store.monthly" :key="m.month" class="app-surface px-4 py-4">
               <div class="flex items-center justify-between">
                 <div class="font-semibold">{{ m.month }}</div>
-                <div class="text-xs opacity-70">{{ m.activities }} wpisów</div>
+                <div class="text-xs opacity-70">
+                  {{ t("training.stats.entriesCount", { count: Number(m.activities ?? 0) }) }}
+                </div>
               </div>
 
               <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
                 <div class="app-card p-3">
-                  <div class="text-xs opacity-70">Łączny dystans</div>
+                  <div class="text-xs opacity-70">{{ t("training.stats.cards.distance") }}</div>
                   <div class="font-semibold">{{ formatKm(m.distance) }}</div>
                   <div class="text-xs opacity-60 mt-1">({{ kmToMetersLabel(m.distance) }})</div>
                 </div>
 
                 <div class="app-card p-3">
-                  <div class="text-xs opacity-70">Łączny czas</div>
+                  <div class="text-xs opacity-70">{{ t("training.stats.cards.time") }}</div>
                   <div class="font-semibold">{{ formatMinutes(m.time_seconds) }}</div>
                   <div class="text-xs opacity-60 mt-1">{{ minutesToHoursLabel(m.time_seconds) }}</div>
                 </div>
 
                 <div class="app-card p-3">
-                  <div class="text-xs opacity-70">Średnia prędkość</div>
+                  <div class="text-xs opacity-70">{{ t("training.stats.cards.avgSpeed") }}</div>
                   <div class="font-semibold">
                     {{ calcAvgSpeedKmh(m.distance, m.time_seconds).toFixed(1) }} km/h
                   </div>
                   <div class="text-xs opacity-60 mt-1">
-                    Tempo: {{ paceMinPerKm(calcAvgSpeedKmh(m.distance, m.time_seconds)) }} min/km
+                    {{ t("training.stats.cards.pace") }}:
+                    {{ paceMinPerKm(calcAvgSpeedKmh(m.distance, m.time_seconds)) }} min/km
                   </div>
                 </div>
               </div>
 
               <div class="mt-4 text-xs opacity-70">
-                Typy w miesiącu: {{ Object.keys(m.types ?? {}).length }}
+                {{ t("training.stats.monthlyTypesCount", { count: Object.keys(m.types ?? {}).length }) }}
               </div>
 
               <div v-if="Object.keys(m.types ?? {}).length" class="mt-2 space-y-2">
@@ -161,7 +168,9 @@
                         <span class="shrink-0">{{ typeMeta(typeKey).emoji }}</span>
                         <span class="truncate">{{ typeLabel(typeKey) }}</span>
                       </div>
-                      <div class="text-xs opacity-70 truncate">{{ tv.activities }} wpisów</div>
+                      <div class="text-xs opacity-70 truncate">
+                        {{ t("training.stats.entriesCount", { count: Number(tv.activities ?? 0) }) }}
+                      </div>
                     </div>
 
                     <div class="text-xs opacity-70 shrink-0 text-right">
@@ -176,7 +185,9 @@
         </div>
       </template>
 
-      <div v-else class="app-surface p-6 text-sm opacity-70">Brak danych.</div>
+      <div v-else class="app-surface p-6 text-sm opacity-70">
+        {{ t("training.stats.empty") }}
+      </div>
     </div>
   </div>
 </template>
@@ -197,6 +208,10 @@ function toNumber(v: unknown): number {
   return Number.isFinite(n) ? n : 0;
 }
 
+/**
+ * ✅ UWAGA: backend zwraca pole `time_seconds`, ale u Ciebie to są MINUTY.
+ * Dlatego wszędzie traktujemy to jako minuty (bez dzielenia przez 60/3600).
+ */
 function toMinutes(raw: unknown): number {
   return Math.max(0, Math.floor(toNumber(raw)));
 }
@@ -215,7 +230,6 @@ function minutesToHoursLabel(minRaw: unknown): string {
   return `≈ ${h.toFixed(2)} h`;
 }
 
-// ✅ distance = KM
 function formatKm(kmRaw: unknown): string {
   const km = Math.max(0, toNumber(kmRaw));
   return `${km.toFixed(2)} km`;
@@ -254,18 +268,16 @@ function typeLabel(apiType: unknown): string {
 
 const overallTypeRows = computed(() => {
   const map = store.overall?.types ?? {};
-  const entries = Object.entries(map);
-
-  return entries
+  return Object.entries(map)
       .map(([typeKey, v]) => {
         const meta = typeMeta(typeKey);
         return {
           typeKey,
           emoji: meta.emoji,
           label: t(meta.i18nKey),
-          activities: Number(v.activities ?? 0),
-          distanceKm: v.distance ?? 0,
-          timeMinutes: v.time_seconds ?? 0,
+          activities: Number((v as any)?.activities ?? 0),
+          distanceKm: (v as any)?.distance ?? 0,
+          timeMinutes: (v as any)?.time_seconds ?? 0,
         };
       })
       .sort((a, b) => b.activities - a.activities);
