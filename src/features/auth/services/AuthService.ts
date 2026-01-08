@@ -4,15 +4,14 @@ import type { UserDTO } from "../../user/domain/UserDTO";
 type LoginResponse = { message: string; token: string; user: UserDTO };
 type RegisterResponse = { message: string; user: UserDTO };
 
-
 type UpdateProfileResponse =
     | { message?: string; data?: Partial<UserDTO> & { id: number; name: string; email: string } }
     | (Partial<UserDTO> & { id: number; name: string; email: string });
 
-export type UpdateProfilePayload = {
+export type UpdateProfilePayload = Partial<{
     name: string;
     email: string;
-};
+}>;
 
 export type ChangePasswordPayload = {
     current_password: string;
@@ -59,11 +58,7 @@ export class AuthService {
         return { user: data.user, token: data.token };
     }
 
-    static async register(
-        name: string,
-        email: string,
-        password: string
-    ): Promise<{ message: string; user: UserDTO }> {
+    static async register(name: string, email: string, password: string): Promise<{ message: string; user: UserDTO }> {
         if (useMock()) {
             const now = nowIso();
             return {
@@ -81,12 +76,7 @@ export class AuthService {
         await api.post("/forgot-password", { email });
     }
 
-    static async resetPassword(payload: {
-        token: string;
-        email: string;
-        password: string;
-        password_confirmation: string;
-    }): Promise<void> {
+    static async resetPassword(payload: { token: string; email: string; password: string; password_confirmation: string }) {
         if (useMock()) return;
         await api.post("/reset-password", payload);
     }
@@ -98,14 +88,22 @@ export class AuthService {
     static async updateProfile(payload: UpdateProfilePayload): Promise<UserDTO> {
         if (useMock()) {
             const now = nowIso();
-            return { id: 1, name: payload.name, email: payload.email, created_at: now, updated_at: now };
+            return {
+                id: 1,
+                name: String(payload.name ?? "User"),
+                email: String(payload.email ?? "user@example.com"),
+                created_at: now,
+                updated_at: now,
+            } as any;
         }
 
-        const res = await api.put<UpdateProfileResponse>(
-            "/profile",
-            { name: payload.name, email: payload.email },
-            { headers: { Accept: "application/json" } }
-        );
+        const body: Record<string, any> = {};
+        if (typeof payload.name === "string") body.name = payload.name;
+        if (typeof payload.email === "string") body.email = payload.email;
+
+        const res = await api.put<UpdateProfileResponse>("/profile", body, {
+            headers: { Accept: "application/json" },
+        });
 
         return normalizeUserDto(res.data);
     }

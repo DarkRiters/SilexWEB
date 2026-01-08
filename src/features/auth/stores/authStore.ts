@@ -74,18 +74,19 @@ export const useAuthStore = defineStore("auth", () => {
         return;
     }
 
-    async function updateProfile(name: string, email: string) {
+    async function updateProfile(payload: { name?: string; email?: string }) {
         const token = getAuthToken();
         if (!token) throw new Error("Brak tokenu. Zaloguj się ponownie.");
 
         try {
-            const dto = await AuthService.updateProfile({ name, email });
-            setUser(dto); // zapis do store + localStorage
+            const dto = await AuthService.updateProfile(payload);
+            setUser(dto);
         } catch (err) {
             if (isUnauthorized(err)) clearSession();
             throw err;
         }
     }
+
 
     async function changePassword(payload: {
         currentPassword: string;

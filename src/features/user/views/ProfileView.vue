@@ -49,6 +49,10 @@
             {{ isBusy ? t("common.loading") : t("settings.profile.save") }}
           </button>
 
+          <div v-if="!hasChanges" class="text-xs opacity-60">
+            {{ t("settings.profile.noChanges") }}
+          </div>
+
           <button
               v-if="auth.isAdmin"
               class="app-button-secondary w-full"
@@ -151,6 +155,11 @@ const profileForm = reactive({
   email: "",
 });
 
+const baseline = reactive({
+  name: "",
+  email: "",
+});
+
 const passwordForm = reactive({
   currentPassword: "",
   newPassword: "",
@@ -158,8 +167,14 @@ const passwordForm = reactive({
 });
 
 function hydrateProfile() {
-  profileForm.name = auth.currentUser?.name ?? "";
-  profileForm.email = auth.currentUser?.email ?? "";
+  const name = auth.currentUser?.name ?? "";
+  const email = auth.currentUser?.email ?? "";
+
+  profileForm.name = name;
+  profileForm.email = email;
+
+  baseline.name = name;
+  baseline.email = email;
 }
 
 async function refresh() {
@@ -178,9 +193,35 @@ async function refresh() {
   }
 }
 
+const nameNow = computed(() => profileForm.name.trim());
+const emailNow = computed(() => profileForm.email.trim().toLowerCase());
+const nameBase = computed(() => baseline.name.trim());
+const emailBase = computed(() => baseline.email.trim().toLowerCase());
+
+const nameChanged = computed(() => nameNow.value !== nameBase.value);
+const emailChanged = computed(() => emailNow.value !== emailBase.value);
+const hasChanges = computed(() => nameChanged.value || emailChanged.value);
+
 const canSaveProfile = computed(() => {
-  return profileForm.name.trim().length > 0 && profileForm.email.trim().length > 0;
+  return nameNow.value.length > 0 && emailNow.value.length > 0 && hasChanges.value;
 });
+
+function pickBackendMessage(e: any): string | null {
+  const msg = e?.response?.data?.message;
+  const errors = e?.response?.data?.errors;
+
+  if (errors && typeof errors === "object") {
+    const firstKey = Object.keys(errors)[0];
+    const firstArr = firstKey ? errors[firstKey] : null;
+    const first = Array.isArray(firstArr) ? firstArr[0] : null;
+    if (typeof first === "string" && first.length) return first;
+  }
+
+  if (typeof msg === "string" && msg.length) return msg;
+  if (typeof e?.message === "string" && e.message.length) return e.message;
+
+  return null;
+}
 
 async function saveProfile() {
   profileError.value = null;
@@ -198,12 +239,25 @@ async function saveProfile() {
     return;
   }
 
+  if (!hasChanges.value) {
+    profileError.value = t("settings.profile.noChanges");
+    return;
+  }
+
+  const payload: { name?: string; email?: string } = {};
+  if (nameChanged.value) payload.name = nameNow.value;
+  if (emailChanged.value) payload.email = emailNow.value;
+
   try {
     isBusy.value = true;
-    await auth.updateProfile(profileForm.name.trim(), profileForm.email.trim());
+    await auth.updateProfile(payload);
+
+    baseline.name = profileForm.name.trim();
+    baseline.email = profileForm.email.trim();
+
     profileSuccess.value = t("settings.profile.saveSuccess");
   } catch (e: any) {
-    profileError.value = e?.message ?? t("settings.profile.saveError");
+    profileError.value = pickBackendMessage(e) ?? t("settings.profile.saveError");
   } finally {
     isBusy.value = false;
   }
@@ -251,7 +305,7 @@ async function changePassword() {
     passwordForm.newPassword = "";
     passwordForm.newPasswordConfirm = "";
   } catch (e: any) {
-    passwordError.value = e?.message ?? t("settings.password.error");
+    passwordError.value = pickBackendMessage(e) ?? t("settings.password.error");
   } finally {
     isBusy.value = false;
   }
